@@ -1,0 +1,141 @@
+import { useLogout } from "@/features/auth/hooks/use-logout.hook";
+import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
+import { Label } from "@/shared/ui/label";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from "@/shared/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/ui/select";
+import { useTranslation } from "react-i18next";
+import { Switch } from "@/shared/ui/switch";
+import { useTheme } from "next-themes";
+import { useProfile } from "@/features/auth/hooks/use-profile.hook";
+
+type SettingsSheetProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
+
+export function SettingsSheet({ open, onOpenChange }: SettingsSheetProps) {
+  const { t } = useTranslation("common");
+  const { handleLogout } = useLogout();
+  const { theme, setTheme } = useTheme();
+  const { data: profile } = useProfile();
+
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="flex flex-col">
+        <SheetHeader className="p-6 pb-2">
+          <SheetTitle>{t("settings.title")}</SheetTitle>
+          <SheetDescription>{t("settings.app.description")}</SheetDescription>
+        </SheetHeader>
+
+        <div className="flex-1 overflow-y-auto p-6 space-y-8">
+          <div className="space-y-4">
+            <h4 className="font-semibold text-lg">
+              {t("settings.account.title")}
+            </h4>
+            <div className="space-y-2">
+              <Label htmlFor="username">{t("formFields.username")}</Label>
+              <Input
+                id="username"
+                defaultValue={profile?.data.name ?? ""}
+                placeholder={t("formFields.usernamePlaceholder")}
+                disabled
+              />
+            </div>
+            <Button variant="outline" disabled>
+              {t("settings.account.updateButton")}
+            </Button>
+          </div>
+
+          {/* App Settings */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-lg">{t("settings.app.title")}</h4>
+            <div className="space-y-2">
+              <Label>{t("settings.app.language")}</Label>
+              <Select disabled>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Polski" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pl">Polski</SelectItem>
+                  <SelectItem value="en">English</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center justify-between rounded-lg border p-3">
+              <Label
+                htmlFor="dark-mode"
+                className="flex flex-col space-y-1 items-start"
+              >
+                <span>{t("settings.app.theme")}</span>
+                <span className="font-normal leading-snug text-muted-foreground">
+                  {t("settings.app.themeDescription")}
+                </span>
+              </Label>
+              <Switch
+                id="dark-mode"
+                checked={theme === "dark"}
+                onCheckedChange={(checked) =>
+                  setTheme(checked ? "dark" : "light")
+                }
+              />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="font-semibold text-lg">
+              {t("settings.notifications.title")}
+            </h4>
+            <Select disabled>
+              <SelectTrigger className="w-full">
+                <SelectValue
+                  placeholder={t("settings.notifications.immediately")}
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="immediately">
+                  {t("settings.notifications.immediately")}
+                </SelectItem>
+                <SelectItem value="hourly">
+                  {t("settings.notifications.hourly")}
+                </SelectItem>
+                <SelectItem value="daily">
+                  {t("settings.notifications.daily")}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-4">
+            <h4 className="font-semibold text-lg">
+              {t("settings.dangerZone.title")}
+            </h4>
+            <Button variant="destructive" disabled className="w-full p-3">
+              {t("settings.dangerZone.deleteAccountTitle")}
+            </Button>
+          </div>
+        </div>
+
+        <SheetFooter className="p-6 pt-4 mt-auto border-t">
+          <div className="w-full space-y-4">
+            <Button onClick={handleLogout} variant="outline" className="w-full">
+              {t("auth.logout")}
+            </Button>
+          </div>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+}

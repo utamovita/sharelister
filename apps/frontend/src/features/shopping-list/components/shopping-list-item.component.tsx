@@ -109,7 +109,7 @@ export const ShoppingListItemComponent = ({
           <Button
             type="submit"
             size="icon"
-            className="h-9 w-9"
+            className="h-9 w-10 min-w-10"
             isLoading={isPending}
             aria-label={"Zapisz zmiany"}
           >
@@ -118,8 +118,8 @@ export const ShoppingListItemComponent = ({
           <Button
             type="button"
             size="icon"
-            variant="ghost"
-            className="h-9 w-9"
+            variant="destructive"
+            className="h-9 w-10 min-w-10"
             onClick={handleCancelEdit}
             disabled={isPending}
             aria-label={"Anuluj"}

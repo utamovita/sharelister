@@ -78,5 +78,34 @@
       "invitesYou": "invites you to the group",
       "noInvitations": "No new invitations."
     }
+  },
+  "settings": {
+    "title": "Settings",
+    "account": {
+      "title": "Account",
+      "description": "Manage your account details.",
+      "updateButton": "Update details",
+      "deleteButton": "Delete Account"
+    },
+    "app": {
+      "title": "Application",
+      "description": "Customize the look and language of the app.",
+      "language": "Language",
+      "theme": "Theme",
+      "themeDescription": "Dark mode"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Set how often you want to receive notifications.",
+      "immediately": "Immediately",
+      "hourly": "Hourly",
+      "daily": "Daily"
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "deleteAccountTitle": "Delete Account",
+      "deleteAccountDescription": "Deleting your account will permanently remove all your data. This action is irreversible.",
+      "deleteAccountButton": "Delete my account"
+    }
   }
 }

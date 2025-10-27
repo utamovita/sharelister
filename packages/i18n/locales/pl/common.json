@@ -78,5 +78,33 @@
       "invitesYou": "zaprasza Cię do grupy",
       "noInvitations": "Brak nowych zaproszeń."
     }
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "account": {
+      "title": "Konto",
+      "description": "Zarządzaj danymi swojego konta.",
+      "updateButton": "Zaktualizuj dane"
+    },
+    "app": {
+      "title": "Aplikacja",
+      "description": "Dostosuj wygląd i język aplikacji.",
+      "language": "Język",
+      "theme": "Motyw",
+      "themeDescription": "Tryb ciemny"
+    },
+    "notifications": {
+      "title": "Powiadomienia",
+      "description": "Ustaw, jak często chcesz otrzymywać powiadomienia.",
+      "immediately": "Natychmiast",
+      "hourly": "Co godzinę",
+      "daily": "Raz dziennie"
+    },
+    "dangerZone": {
+      "title": "Strefa zagrożenia",
+      "deleteAccountTitle": "Usuń konto",
+      "deleteAccountDescription": "Usunięcie konta spowoduje trwałe usunięcie wszystkich Twoich danych. Ta akcja jest nieodwracalna.",
+      "deleteAccountButton": "Usuń moje konto"
+    }
   }
 }

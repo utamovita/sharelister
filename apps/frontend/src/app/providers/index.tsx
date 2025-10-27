@@ -9,6 +9,7 @@ import { DialogManager } from "@/widgets/dialog-manager";
 import { useUiStore } from "@/shared/store/ui.store";
 import { SpinnerOverlay } from "@/shared/ui/spinner";
 import { PageTransitionManager } from "@/app/providers/page-transition-manager";
+import { SheetManager } from "@/widgets/sheet-manager";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -29,6 +30,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         {children}
         <Toaster richColors />
         <DialogManager />
+        <SheetManager />
       </QueryClientProvider>
     </ThemeProvider>
   );
