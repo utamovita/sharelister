@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next";
 import { Switch } from "@/shared/ui/switch";
 import { useTheme } from "next-themes";
 import { useProfile } from "@/features/auth/hooks/use-profile.hook";
+import { LanguageSwitcher } from "@/features/settings/components/lang-switcher.component";
 
 type SettingsSheetProps = {
   open: boolean;
@@ -42,10 +43,7 @@ export function SettingsSheet({ open, onOpenChange }: SettingsSheetProps) {
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-8">
-          <div className="space-y-4">
-            <h4 className="font-semibold text-lg">
-              {t("settings.account.title")}
-            </h4>
+          <SheetItem title={t("settings.account.title")}>
             <div className="space-y-2">
               <Label htmlFor="username">{t("formFields.username")}</Label>
               <Input
@@ -58,23 +56,10 @@ export function SettingsSheet({ open, onOpenChange }: SettingsSheetProps) {
             <Button variant="outline" disabled>
               {t("settings.account.updateButton")}
             </Button>
-          </div>
+          </SheetItem>
+          <SheetItem title={t("settings.app.title")}>
+            <LanguageSwitcher />
 
-          {/* App Settings */}
-          <div className="space-y-4">
-            <h4 className="font-semibold text-lg">{t("settings.app.title")}</h4>
-            <div className="space-y-2">
-              <Label>{t("settings.app.language")}</Label>
-              <Select disabled>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Polski" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pl">Polski</SelectItem>
-                  <SelectItem value="en">English</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
             <div className="flex items-center justify-between rounded-lg border p-3">
               <Label
                 htmlFor="dark-mode"
@@ -93,12 +78,9 @@ export function SettingsSheet({ open, onOpenChange }: SettingsSheetProps) {
                 }
               />
             </div>
-          </div>
+          </SheetItem>
 
-          <div className="space-y-4">
-            <h4 className="font-semibold text-lg">
-              {t("settings.notifications.title")}
-            </h4>
+          <SheetItem title={t("settings.notifications.title")}>
             <Select disabled>
               <SelectTrigger className="w-full">
                 <SelectValue
@@ -117,15 +99,13 @@ export function SettingsSheet({ open, onOpenChange }: SettingsSheetProps) {
                 </SelectItem>
               </SelectContent>
             </Select>
-          </div>
-          <div className="space-y-4">
-            <h4 className="font-semibold text-lg">
-              {t("settings.dangerZone.title")}
-            </h4>
+          </SheetItem>
+
+          <SheetItem title={t("settings.dangerZone.title")}>
             <Button variant="destructive" disabled className="w-full p-3">
               {t("settings.dangerZone.deleteAccountTitle")}
             </Button>
-          </div>
+          </SheetItem>
         </div>
 
         <SheetFooter className="p-6 pt-4 mt-auto border-t">
@@ -137,5 +117,20 @@ export function SettingsSheet({ open, onOpenChange }: SettingsSheetProps) {
         </SheetFooter>
       </SheetContent>
     </Sheet>
+  );
+}
+
+function SheetItem({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-4">
+      <h4 className="font-semibold text-lg">{title}</h4>
+      {children}
+    </div>
   );
 }

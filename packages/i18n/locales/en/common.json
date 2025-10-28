@@ -5,6 +5,7 @@
   "yesDelete": "Yes, delete",
   "accept": "Accept",
   "decline": "Decline",
+  "save": "Zapisz",
   "role": {
     "admin": "Admin",
     "user": "Member"

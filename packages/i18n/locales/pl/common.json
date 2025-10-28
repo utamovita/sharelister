@@ -5,6 +5,7 @@
   "yesDelete": "Tak, usuń",
   "accept": "Akceptuj",
   "decline": "Odrzuć",
+  "save": "Zapisz",
   "role": {
     "admin": "Administrator",
     "user": "Członek"
@@ -51,7 +52,7 @@
       "title": "Zarządzaj członkami",
       "currentMembers": "Obceni członkowie.",
       "removedMemberSuccess": "Członek został usunięty z grupy.",
-      "roleUpdatedSuccess": "Członek został usunięty z grupy."
+      "roleUpdatedSuccess": "Rola członka została zaktualizowana."
     }
   },
   "shoppingList": {

@@ -111,7 +111,7 @@ export const ShoppingListItemComponent = ({
             size="icon"
             className="h-9 w-10 min-w-10"
             isLoading={isPending}
-            aria-label={"Zapisz zmiany"}
+            aria-label={t("save")}
           >
             <Check className="h-4 w-4" />
           </Button>
@@ -122,7 +122,7 @@ export const ShoppingListItemComponent = ({
             className="h-9 w-10 min-w-10"
             onClick={handleCancelEdit}
             disabled={isPending}
-            aria-label={"Anuluj"}
+            aria-label={t("decline")}
           >
             <X className="h-4 w-4" />
           </Button>
