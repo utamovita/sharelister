@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useProfile } from "@/features/auth/hooks/use-profile.hook";
+
 import { Button } from "@/shared/ui/button";
 import { ArrowLeft, Settings } from "lucide-react";
 import { APP_PATHS } from "@repo/config";
@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { InvitationsBell } from "@/features/groups/subfeatures/invitations/invitations-bell.component";
 import { LoadingLink } from "@/shared/components/loading-link.component";
 import { SHEET_TYPES, useUiStore } from "@/shared/store/ui.store";
+import { useProfile } from "@/features/settings/hooks/use-profile.hook";
 
 export function DashboardHeader() {
   const pathname = usePathname();

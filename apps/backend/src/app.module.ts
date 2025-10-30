@@ -8,6 +8,7 @@ import {
 } from 'nestjs-i18n';
 import * as path from 'path';
 
+import { AccountModule } from './account/account.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -40,6 +41,7 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
     ShoppingListModule,
     EventsModule,
     InvitationsModule,
+    AccountModule,
   ],
   controllers: [AppController],
   providers: [AppService],

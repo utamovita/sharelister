@@ -89,7 +89,7 @@
       "deleteButton": "Delete Account"
     },
     "app": {
-      "title": "Application",
+      "title": "App",
       "description": "Customize the look and language of the app.",
       "language": "Language",
       "theme": "Theme",

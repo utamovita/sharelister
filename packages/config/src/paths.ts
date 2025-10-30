@@ -10,10 +10,10 @@ export const API_PATHS = {
   auth: {
     login: "/auth/login",
     register: "/auth/register",
-    profile: "/auth/profile",
     refresh: "/auth/refresh",
     logout: "/auth/logout",
   },
+  account: "/account",
   groups: "/groups",
   shoppingList: (groupId: string) => `/groups/${groupId}/items`,
   invitations: {

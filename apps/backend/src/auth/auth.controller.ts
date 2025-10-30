@@ -1,20 +1,13 @@
 import {
   Body,
   Controller,
-  Get,
   HttpCode,
   HttpStatus,
   Post,
   Request,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import type { SuccessResponse, UserProfile } from '@repo/types';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -72,20 +65,5 @@ export class AuthController {
     const { sub, refreshToken } = req.user;
     const tokens = await this.authService.refreshToken(sub, refreshToken);
     return { success: true, data: tokens };
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get current user profile' })
-  @ApiResponse({
-    status: 200,
-    description: 'Returns the current user profile.',
-  })
-  @ApiResponse({ status: 401, description: 'Unauthorized.' })
-  getProfile(
-    @Request() req: { user: UserProfile },
-  ): SuccessResponse<UserProfile> {
-    return { success: true, data: req.user };
   }
 }

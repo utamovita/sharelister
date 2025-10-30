@@ -1,6 +1,5 @@
 import { useLogout } from "@/features/auth/hooks/use-logout.hook";
 import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
 import {
   Sheet,
@@ -20,8 +19,8 @@ import {
 import { useTranslation } from "react-i18next";
 import { Switch } from "@/shared/ui/switch";
 import { useTheme } from "next-themes";
-import { useProfile } from "@/features/auth/hooks/use-profile.hook";
 import { LanguageSwitcher } from "@/features/settings/components/lang-switcher.component";
+import { UpdateProfileForm } from "@/features/settings/components/update-profile-form.component";
 
 type SettingsSheetProps = {
   open: boolean;
@@ -32,11 +31,13 @@ export function SettingsSheet({ open, onOpenChange }: SettingsSheetProps) {
   const { t } = useTranslation("common");
   const { handleLogout } = useLogout();
   const { theme, setTheme } = useTheme();
-  const { data: profile } = useProfile();
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="flex flex-col">
+      <SheetContent
+        className="flex flex-col"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <SheetHeader className="p-6 pb-2">
           <SheetTitle>{t("settings.title")}</SheetTitle>
           <SheetDescription>{t("settings.app.description")}</SheetDescription>
@@ -44,18 +45,7 @@ export function SettingsSheet({ open, onOpenChange }: SettingsSheetProps) {
 
         <div className="flex-1 overflow-y-auto p-6 space-y-8">
           <SheetItem title={t("settings.account.title")}>
-            <div className="space-y-2">
-              <Label htmlFor="username">{t("formFields.username")}</Label>
-              <Input
-                id="username"
-                defaultValue={profile?.data.name ?? ""}
-                placeholder={t("formFields.usernamePlaceholder")}
-                disabled
-              />
-            </div>
-            <Button variant="outline" disabled>
-              {t("settings.account.updateButton")}
-            </Button>
+            <UpdateProfileForm />
           </SheetItem>
           <SheetItem title={t("settings.app.title")}>
             <LanguageSwitcher />

@@ -50,7 +50,7 @@
     },
     "manageMembers": {
       "title": "Zarządzaj członkami",
-      "currentMembers": "Obceni członkowie.",
+      "currentMembers": "Obecni członkowie",
       "removedMemberSuccess": "Członek został usunięty z grupy.",
       "roleUpdatedSuccess": "Rola członka została zaktualizowana."
     }

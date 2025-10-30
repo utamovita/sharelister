@@ -7,7 +7,7 @@ import {
 } from "@/shared/ui/dialog";
 import { GroupWithDetails, GroupMember } from "@repo/types";
 import { CreateInvitationForm } from "@/features/groups/subfeatures/invitations/create-invitation-form.component";
-import { useProfile } from "@/features/auth/hooks/use-profile.hook";
+
 import { useRemoveMember } from "@/features/groups/subfeatures/manage-members/use-remove-member.hook";
 import { useUpdateMemberRole } from "@/features/groups/subfeatures/manage-members/use-update-member-role.hook";
 import { Button } from "@/shared/ui/button";
@@ -22,6 +22,7 @@ import {
 import type { Role } from "@repo/types";
 import { useTranslation } from "react-i18next";
 import { ROLES } from "@repo/types";
+import { useProfile } from "@/features/settings/hooks/use-profile.hook";
 
 type ManageMembersDialogProps = {
   group: GroupWithDetails;

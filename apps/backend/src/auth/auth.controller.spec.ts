@@ -70,15 +70,4 @@ describe('AuthController', () => {
       expect(result.data).toEqual(expectedResult);
     });
   });
-
-  describe('getProfile (happy path)', () => {
-    it('should return the user object from the request', () => {
-      const mockUser = createMockUser();
-      const mockRequest = { user: mockUser };
-
-      const result = controller.getProfile(mockRequest);
-
-      expect(result).toEqual({ success: true, data: mockUser });
-    });
-  });
 });
