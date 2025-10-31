@@ -5,6 +5,7 @@ import { ManageMembersDialog } from "@/features/groups/subfeatures/manage-member
 import { RenameGroupDialog } from "@/features/groups/subfeatures/rename-group/rename-group-dialog";
 import { DeleteGroupDialog } from "@/features/groups/subfeatures/delete-group/delete-group-dialog.component";
 import { CreateGroupDialog } from "@/features/groups/subfeatures/create-group/create-group-dialog.component";
+import { DeleteAccountDialog } from "@/features/settings/subfeatures/delete-account/delete-account-dialog.component";
 
 export function DialogManager() {
   const { dialogState, closeDialog } = useUiStore();
@@ -39,6 +40,10 @@ export function DialogManager() {
       );
     case DIALOG_TYPES.CREATE_GROUP:
       return <CreateGroupDialog {...commonProps} />;
+
+    case DIALOG_TYPES.DELETE_ACCOUNT:
+      return <DeleteAccountDialog {...commonProps} />;
+
     default:
       return null;
   }

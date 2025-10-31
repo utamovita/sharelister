@@ -23,7 +23,8 @@
     "email": "Email",
     "password": "Password",
     "username": "Username",
-    "usernamePlaceholder": "John Doe"
+    "usernamePlaceholder": "John Doe",
+    "confirmation": "Confirmation"
   },
   "error": "Error",
   "group": {
@@ -106,7 +107,12 @@
       "title": "Danger Zone",
       "deleteAccountTitle": "Delete Account",
       "deleteAccountDescription": "Deleting your account will permanently remove all your data. This action is irreversible.",
-      "deleteAccountButton": "Delete my account"
+      "deleteAccountButton": "Delete my account",
+      "deleteAccountDialog": {
+        "title": "Are you sure you want to delete your account?",
+        "description": "This action is irreversible. All your data, groups you are the sole member of, and shopping lists will be permanently deleted. To confirm, please type the phrase below.",
+        "confirmationPhrase": "Yes, delete my account"
+      }
     }
   }
 }

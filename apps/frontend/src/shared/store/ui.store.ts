@@ -7,6 +7,7 @@ export const DIALOG_TYPES = {
   RENAME_GROUP: "rename-group",
   DELETE_GROUP: "delete-group",
   CREATE_GROUP: "create-group",
+  DELETE_ACCOUNT: "delete-account",
 } as const;
 
 export const SHEET_TYPES = {
@@ -21,6 +22,7 @@ export type DialogPayload = {
   [DIALOG_TYPES.RENAME_GROUP]: { group: Group };
   [DIALOG_TYPES.DELETE_GROUP]: { group: Group };
   [DIALOG_TYPES.CREATE_GROUP]: Record<string, never>;
+  [DIALOG_TYPES.DELETE_ACCOUNT]: Record<string, never>;
 };
 
 export type SheetPayload = {

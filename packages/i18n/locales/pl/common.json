@@ -23,7 +23,8 @@
     "email": "Email",
     "password": "Hasło",
     "username": "Nazwa użytkownika",
-    "usernamePlaceholder": "Jan Kowalski"
+    "usernamePlaceholder": "Jan Kowalski",
+    "confirmation": "Potwierdź"
   },
   "error": "Błąd",
   "group": {
@@ -105,7 +106,12 @@
       "title": "Strefa zagrożenia",
       "deleteAccountTitle": "Usuń konto",
       "deleteAccountDescription": "Usunięcie konta spowoduje trwałe usunięcie wszystkich Twoich danych. Ta akcja jest nieodwracalna.",
-      "deleteAccountButton": "Usuń moje konto"
+      "deleteAccountButton": "Usuń moje konto",
+      "deleteAccountDialog": {
+        "title": "Czy na pewno chcesz usunąć konto?",
+        "description": "Ta operacja jest nieodwracalna. Wszystkie Twoje dane, grupy, których jesteś jedynym członkiem, i listy zakupów zostaną trwale usunięte. Aby potwierdzić, wpisz poniżej frazę",
+        "confirmationPhrase": "tak, usuń moje konto"
+      }
     }
   }
 }

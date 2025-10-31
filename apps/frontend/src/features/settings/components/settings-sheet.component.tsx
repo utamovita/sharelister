@@ -21,6 +21,7 @@ import { Switch } from "@/shared/ui/switch";
 import { useTheme } from "next-themes";
 import { LanguageSwitcher } from "@/features/settings/components/lang-switcher.component";
 import { UpdateProfileForm } from "@/features/settings/components/update-profile-form.component";
+import { DeleteAccountButton } from "@/features/settings/subfeatures/delete-account/delete-account-button.component";
 
 type SettingsSheetProps = {
   open: boolean;
@@ -92,9 +93,7 @@ export function SettingsSheet({ open, onOpenChange }: SettingsSheetProps) {
           </SheetItem>
 
           <SheetItem title={t("settings.dangerZone.title")}>
-            <Button variant="destructive" disabled className="w-full p-3">
-              {t("settings.dangerZone.deleteAccountTitle")}
-            </Button>
+            <DeleteAccountButton />
           </SheetItem>
         </div>
 

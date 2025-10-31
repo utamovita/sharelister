@@ -17,4 +17,7 @@ export const accountApi = {
     );
     return response.data;
   },
+  deleteAccount: async () => {
+    return apiClient.delete<null>(API_PATHS.account);
+  },
 };

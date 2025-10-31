@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Patch,
   Request,
   UseGuards,
@@ -53,5 +56,14 @@ export class AccountController {
 
     const { name } = updatedUser;
     return { success: true, data: name, message: 'success.profileUpdated' };
+  }
+
+  @Delete()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Delete current user account' })
+  @ApiResponse({ status: 204, description: 'Account successfully deleted.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  async deleteAccount(@Request() req: { user: UserProfile }): Promise<void> {
+    await this.accountService.deleteAccount(req.user.id);
   }
 }
