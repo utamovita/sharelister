@@ -17,7 +17,14 @@
     "createAccountPrompt": "Create an account to get started.",
     "haveAccountPrompt": "Already have an account?",
     "noAccountPrompt": "Don't have an account?",
-    "logout": "Logout"
+    "logout": "Logout",
+    "orContinueWith": "or continue with",
+    "loginWithGoogle": "Log in with Google",
+    "error": {
+      "providerMismatchTitle": "Login Error",
+      "providerMismatchDescription": "An account with this email already exists but was created with a password. Please log in using your password.",
+      "wrongProvider": "This account is registered via {{provider}}. Please log in using that method."
+    }
   },
   "formFields": {
     "email": "Email",

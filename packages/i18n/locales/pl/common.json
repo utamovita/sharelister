@@ -17,7 +17,14 @@
     "createAccountPrompt": "Stwórz konto, aby zacząć.",
     "haveAccountPrompt": "Masz już konto?",
     "noAccountPrompt": "Nie masz konta?",
-    "logout": "Wyloguj się"
+    "logout": "Wyloguj się",
+    "orContinueWith": "lub kontynuuj za pomocą",
+    "loginWithGoogle": "Zaloguj się z Google",
+    "error": {
+      "providerMismatchTitle": "Błąd logowania",
+      "providerMismatchDescription": "Konto z tym adresem e-mail już istnieje, ale zostało utworzone za pomocą hasła. Zaloguj się, używając swojego hasła.",
+      "wrongProvider": "To konto jest zarejestrowane przez {{provider}}. Proszę zalogować się za pomocą tej metody."
+    }
   },
   "formFields": {
     "email": "Email",

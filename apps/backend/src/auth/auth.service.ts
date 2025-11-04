@@ -55,7 +55,17 @@ export class AuthService {
 
     const user = await this.prisma.user.findUnique({ where: { email } });
 
-    if (!user || !user.passwordHash) {
+    if (!user) {
+      throw new UnauthorizedException('credentials.invalid');
+    }
+
+    if (user.provider !== 'credentials') {
+      throw new ConflictException(
+        `To konto jest zarejestrowane przez ${user.provider}. Proszę zalogować się za pomocą tej metody.`,
+      );
+    }
+
+    if (!user.passwordHash) {
       throw new UnauthorizedException('credentials.invalid');
     }
 
@@ -78,11 +88,7 @@ export class AuthService {
     return tokens;
   }
 
-  async googleLogin(reqUser: {
-    email: string;
-    firstName?: string;
-    lastName?: string;
-  }) {
+  async googleLogin(reqUser: { email: string; firstName?: string }) {
     let user = await this.prisma.user.findUnique({
       where: { email: reqUser.email },
     });
@@ -91,13 +97,13 @@ export class AuthService {
       user = await this.prisma.user.create({
         data: {
           email: reqUser.email,
-          name: `${reqUser.firstName ?? ''} ${reqUser.lastName ?? ''}`.trim(),
+          name: reqUser.firstName || reqUser.email.split('@')[0],
           provider: 'google',
         },
       });
     } else if (user.provider !== 'google') {
       throw new ConflictException(
-        'Użytkownik z tym adresem email już istnieje, ale nie jest powiązany z Google.',
+        'Konto z tym adresem e-mail już istnieje. Zaloguj się używając hasła.',
       );
     }
 

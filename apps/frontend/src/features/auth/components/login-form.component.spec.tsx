@@ -6,11 +6,12 @@ import { loginSchema, type LoginDto } from "@repo/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
+import { useSearchParams } from "next/navigation";
 
 jest.mock("../hooks/use-login-form.hook");
 
 const mockUseLoginForm = useLoginForm as jest.Mock;
-
+const mockUseSearchParams = useSearchParams as jest.Mock;
 describe("LoginForm", () => {
   const mockSubmit = jest.fn();
 
@@ -28,6 +29,10 @@ describe("LoginForm", () => {
       form: result.current,
       onSubmit: mockSubmit,
       isPending: false,
+    });
+
+    mockUseSearchParams.mockReturnValue({
+      get: jest.fn().mockReturnValue(null),
     });
   });
 
@@ -131,5 +136,18 @@ describe("LoginForm", () => {
     const { container } = render(<LoginForm />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
+  });
+
+  it("should display an alert when 'error' param is present", () => {
+    mockUseSearchParams.mockReturnValue({
+      get: (key: string) => (key === "error" ? "provider_mismatch" : null),
+    });
+
+    render(<LoginForm />);
+
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(
+      screen.getByText("auth.error.providerMismatchTitle"),
+    ).toBeInTheDocument();
   });
 });

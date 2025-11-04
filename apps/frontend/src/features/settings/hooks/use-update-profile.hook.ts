@@ -9,8 +9,8 @@ import { useUiStore } from "@/shared/store/ui.store";
 
 export function useUpdateProfile() {
   const queryClient = useQueryClient();
-  const { t } = useTranslation("common");
-  const { closeSheet, closeDialog } = useUiStore();
+  const { t } = useTranslation("validation");
+  const { closeSheet } = useUiStore();
 
   return useMutation({
     mutationFn: accountApi.updateProfile,

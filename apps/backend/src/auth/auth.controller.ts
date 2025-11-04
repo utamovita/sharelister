@@ -1,5 +1,6 @@
 import {
   Body,
+  ConflictException,
   Controller,
   Get,
   HttpCode,
@@ -89,14 +90,28 @@ export class AuthController {
     @Req() req: { user: GoogleProfile },
     @Res() res: Response,
   ) {
-    const tokens = await this.authService.googleLogin(req.user);
-
     const frontendUrl = this.configService.getOrThrow<string>('FRONTEND_URL');
 
-    const redirectUrl = new URL(`${frontendUrl}/auth/callback`);
-    redirectUrl.searchParams.set('accessToken', tokens.accessToken);
-    redirectUrl.searchParams.set('refreshToken', tokens.refreshToken);
+    try {
+      const tokens = await this.authService.googleLogin(req.user);
 
-    res.redirect(redirectUrl.toString());
+      const redirectUrl = new URL(`${frontendUrl}/auth/callback`);
+      redirectUrl.searchParams.set('accessToken', tokens.accessToken);
+      redirectUrl.searchParams.set('refreshToken', tokens.refreshToken);
+
+      res.redirect(redirectUrl.toString());
+    } catch (error) {
+      if (error instanceof ConflictException) {
+        const redirectUrl = new URL(`${frontendUrl}/login`);
+        redirectUrl.searchParams.set('error', 'provider_mismatch');
+        redirectUrl.searchParams.set('email', req.user.email);
+        res.redirect(redirectUrl.toString());
+        return;
+      }
+
+      const errorUrl = new URL(`${frontendUrl}/login`);
+      errorUrl.searchParams.set('error', 'unknown');
+      res.redirect(errorUrl.toString());
+    }
   }
 }

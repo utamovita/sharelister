@@ -22,7 +22,8 @@
   "success": {
     "login": "Pomyślnie zalogowano.",
     "register": "Pomyślnie zarejestrowano.",
-    "groupCreated": "Grupa została pomyślnie utworzona."
+    "groupCreated": "Grupa została pomyślnie utworzona.",
+    "profileUpdated": "Twoja nazwa użytkownika została pomyślnie zaktualizowana."
   },
   "error": {
     "generic": "Wystąpił błąd. Proszę spróbować ponownie później."

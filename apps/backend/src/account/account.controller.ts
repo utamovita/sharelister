@@ -55,7 +55,11 @@ export class AccountController {
     );
 
     const { name } = updatedUser;
-    return { success: true, data: name, message: 'success.profileUpdated' };
+    return {
+      success: true,
+      data: name,
+      message: 'success.profileUpdated',
+    };
   }
 
   @Delete()

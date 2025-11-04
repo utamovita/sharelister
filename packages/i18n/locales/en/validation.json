@@ -22,7 +22,8 @@
   "success": {
     "login": "Logged in successfully.",
     "register": "Registered successfully.",
-    "groupCreated": "Group created successfully."
+    "groupCreated": "Group created successfully.",
+    "profileUpdated": "Your username has been updated successfully."
   },
   "error": {
     "generic": "An error occurred. Please try again later."
