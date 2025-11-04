@@ -26,7 +26,7 @@ export function Spinner({ className, size, ...props }: SpinnerProps) {
 }
 
 const overlayVariants = cva(
-  "absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50",
+  "absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm z-50",
   {
     variants: {
       variant: {

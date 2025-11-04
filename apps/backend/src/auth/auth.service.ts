@@ -78,6 +78,38 @@ export class AuthService {
     return tokens;
   }
 
+  async googleLogin(reqUser: {
+    email: string;
+    firstName?: string;
+    lastName?: string;
+  }) {
+    let user = await this.prisma.user.findUnique({
+      where: { email: reqUser.email },
+    });
+
+    if (!user) {
+      user = await this.prisma.user.create({
+        data: {
+          email: reqUser.email,
+          name: `${reqUser.firstName ?? ''} ${reqUser.lastName ?? ''}`.trim(),
+          provider: 'google',
+        },
+      });
+    } else if (user.provider !== 'google') {
+      throw new ConflictException(
+        'Użytkownik z tym adresem email już istnieje, ale nie jest powiązany z Google.',
+      );
+    }
+
+    const tokens = await this._generateTokens({
+      sub: user.id,
+      email: user.email,
+    });
+    await this._updateRefreshTokenHash(user.id, tokens.refreshToken);
+
+    return tokens;
+  }
+
   async logout(userId: string) {
     await this.prisma.user.update({
       where: { id: userId, refreshTokenHash: { not: null } },

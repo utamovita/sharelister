@@ -53,17 +53,30 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const Comp = asChild ? Slot : "button";
+    if (asChild) {
+      return (
+        <Slot
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          disabled={isLoading}
+          {...props}
+        >
+          {children}
+        </Slot>
+      );
+    }
+
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+      <button
+        className={cn("relative", buttonVariants({ variant, size, className }))}
         ref={ref}
         disabled={isLoading}
         {...props}
       >
         {isLoading ? <SpinnerOverlay variant={"container"} /> : null}
-        {children}
-      </Comp>
+
+        <span>{children}</span>
+      </button>
     );
   },
 );

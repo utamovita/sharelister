@@ -1,6 +1,6 @@
+import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { I18nService } from 'nestjs-i18n';
-import { createMockUser } from 'src/test-utils/mocks';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -15,6 +15,15 @@ describe('AuthController', () => {
     login: jest.fn(),
   };
 
+  const mockConfigService = {
+    getOrThrow: jest.fn((key: string) => {
+      if (key === 'FRONTEND_URL') {
+        return 'http://localhost:3001';
+      }
+      return null;
+    }),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
@@ -26,6 +35,10 @@ describe('AuthController', () => {
         {
           provide: I18nService,
           useValue: { t: jest.fn() },
+        },
+        {
+          provide: ConfigService,
+          useValue: mockConfigService,
         },
       ],
     })
