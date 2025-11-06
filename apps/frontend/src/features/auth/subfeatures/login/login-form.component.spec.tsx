@@ -1,14 +1,14 @@
 import { render, screen, renderHook, waitFor } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 import LoginForm from "./login-form.component";
-import { useLoginForm } from "../hooks/use-login-form.hook";
+import { useLoginForm } from "./use-login-form.hook";
 import { loginSchema, type LoginDto } from "@repo/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { useSearchParams } from "next/navigation";
 
-jest.mock("../hooks/use-login-form.hook");
+jest.mock("./use-login-form.hook");
 
 const mockUseLoginForm = useLoginForm as jest.Mock;
 const mockUseSearchParams = useSearchParams as jest.Mock;

@@ -3,10 +3,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, type RegisterDto } from "@repo/schemas";
-import { useAuthMutation } from "./use-auth-mutation.hook";
+import { useRegisterMutation } from "@/features/auth/subfeatures/register/use-register-mutation.hook";
 
 export function useRegisterForm() {
-  const { mutate, isPending } = useAuthMutation("register");
+  const { mutate, isPending } = useRegisterMutation();
 
   const form = useForm<RegisterDto>({
     resolver: zodResolver(registerSchema),

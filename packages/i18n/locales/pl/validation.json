@@ -23,9 +23,15 @@
     "login": "Pomyślnie zalogowano.",
     "register": "Pomyślnie zarejestrowano.",
     "groupCreated": "Grupa została pomyślnie utworzona.",
-    "profileUpdated": "Twoja nazwa użytkownika została pomyślnie zaktualizowana."
+    "profileUpdated": "Twoja nazwa użytkownika została pomyślnie zaktualizowana.",
+    "emailVerified": "Adres e-mail został pomyślnie zweryfikowany.",
+    "passwordResetLinkSent": "Jeśli konto istnieje, link do resetu hasła został wysłany.",
+    "passwordReset": "Hasło zostało pomyślnie zresetowane."
   },
   "error": {
-    "generic": "Wystąpił błąd. Proszę spróbować ponownie później."
+    "generic": "Wystąpił błąd. Proszę spróbować ponownie później.",
+    "invalidVerificationToken": "Nieprawidłowy token weryfikacyjny.",
+    "invalidOrExpiredToken": "Token jest nieprawidłowy lub wygasł.",
+    "emailNotVerified": "Proszę najpierw zweryfikować swój adres e-mail."
   }
 }

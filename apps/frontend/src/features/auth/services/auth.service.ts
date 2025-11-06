@@ -20,13 +20,6 @@ export const authService = {
 
   register: async (values: RegisterDto) => {
     const response = await authApi.register(values);
-    const serverResponse = response.data;
-
-    const validatedData = authResponseSchema.parse(serverResponse.data);
-
-    return {
-      ...serverResponse,
-      data: validatedData,
-    };
+    return response.data;
   },
 };

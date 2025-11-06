@@ -10,6 +10,10 @@ export const createMockUser = (overrides: Partial<User> = {}): User => {
     createdAt: new Date(),
     updatedAt: new Date(),
     refreshTokenHash: null,
+    passwordResetExpires: null,
+    passwordResetToken: null,
+    verificationToken: null,
+    emailVerified: null,
   };
   return { ...defaultUser, ...overrides };
 };

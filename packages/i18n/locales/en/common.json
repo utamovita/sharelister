@@ -20,6 +20,16 @@
     "logout": "Logout",
     "orContinueWith": "or continue with",
     "loginWithGoogle": "Log in with Google",
+    "forgotPassword": "Forgot your password?",
+    "forgotPasswordTitle": "Reset Password",
+    "forgotPasswordDescription": "Enter your email address and we'll send you a link to reset your password.",
+    "sendResetLink": "Send reset link",
+    "backToLogin": "Back to login",
+    "resetPassword": "Reset Password",
+    "resetPasswordTitle": "Set a new password",
+    "resetPasswordDescription": "Please enter your new password below.",
+    "saveNewPassword": "Save new password",
+    "passwordResetSuccess": "Your password has been changed. You can now log in.",
     "error": {
       "providerMismatchTitle": "Login Error",
       "providerMismatchDescription": "An account with this email already exists but was created with a password. Please log in using your password.",
@@ -29,6 +39,8 @@
   "formFields": {
     "email": "Email",
     "password": "Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
     "username": "Username",
     "usernamePlaceholder": "John Doe",
     "confirmation": "Confirmation"

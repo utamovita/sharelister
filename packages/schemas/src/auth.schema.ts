@@ -30,3 +30,20 @@ export const registerSchema = loginSchema.extend({
 
 export type LoginDto = z.infer<typeof loginSchema>;
 export type RegisterDto = z.infer<typeof registerSchema>;
+
+export const forgotPasswordSchema = z.object({
+  email: z.email({ message: "validation:email.invalid" }),
+});
+
+export const resetPasswordSchema = z.object({
+  token: z.string().min(1),
+  password: z.string().min(8, {
+    message: JSON.stringify({
+      key: "validation:password.minLength",
+      values: { count: 8 },
+    }),
+  }),
+});
+
+export type ForgotPasswordDto = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordDto = z.infer<typeof resetPasswordSchema>;

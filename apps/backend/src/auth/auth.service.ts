@@ -7,10 +7,11 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
-import { LoginUserDto } from './dto/login-user.dto';
-import { RegisterUserDto } from './dto/register-user.dto';
+import { MailService } from '../mail/mail.service';
+import { LoginUserDto, RegisterUserDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
     private prisma: PrismaService,
     private jwtService: JwtService,
     private configService: ConfigService,
+    private mailService: MailService,
   ) {}
 
   async register(registerUserDto: RegisterUserDto) {
@@ -33,11 +35,36 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+
     const user = await this.prisma.user.create({
       data: {
         email,
         passwordHash: hashedPassword,
         name: username,
+        verificationToken,
+      },
+    });
+
+    await this.mailService.sendVerificationEmail(user.email, verificationToken);
+
+    return { message: 'Verification email sent.' };
+  }
+
+  async verifyEmail(token: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { verificationToken: token },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('error.invalidVerificationToken');
+    }
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        emailVerified: new Date(),
+        verificationToken: null,
       },
     });
 
@@ -45,6 +72,7 @@ export class AuthService {
       sub: user.id,
       email: user.email,
     });
+
     await this._updateRefreshTokenHash(user.id, tokens.refreshToken);
 
     return tokens;
@@ -63,6 +91,10 @@ export class AuthService {
       throw new ConflictException(
         `To konto jest zarejestrowane przez ${user.provider}. Proszę zalogować się za pomocą tej metody.`,
       );
+    }
+
+    if (!user.emailVerified) {
+      throw new UnauthorizedException('error.emailNotVerified');
     }
 
     if (!user.passwordHash) {
@@ -173,5 +205,55 @@ export class AuthService {
       accessToken,
       refreshToken,
     };
+  }
+
+  async sendPasswordResetLink(email: string) {
+    const user = await this.prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+      return;
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const passwordResetToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+
+    const passwordResetExpires = new Date(Date.now() + 3600000); // 1 hour
+
+    await this.prisma.user.update({
+      where: { email },
+      data: { passwordResetToken, passwordResetExpires },
+    });
+
+    await this.mailService.sendPasswordResetEmail(email, resetToken);
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    const user = await this.prisma.user.findUnique({
+      where: { passwordResetToken: hashedToken },
+    });
+
+    if (
+      !user ||
+      !user.passwordResetExpires ||
+      user.passwordResetExpires < new Date()
+    ) {
+      throw new UnauthorizedException('error.invalidOrExpiredToken');
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        passwordHash: hashedPassword,
+        passwordResetToken: null,
+        passwordResetExpires: null,
+      },
+    });
   }
 }

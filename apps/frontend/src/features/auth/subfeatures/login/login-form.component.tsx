@@ -14,45 +14,42 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/shared/ui/card";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { useRegisterForm } from "@/features/auth/hooks/use-register-form.hook";
+import { useLoginForm } from "@/features/auth/subfeatures/login/use-login-form.hook";
 import { APP_PATHS } from "@repo/config";
+import { useSearchParams } from "next/navigation";
+import { Alert, AlertDescription, AlertTitle } from "@/shared/ui/alert";
+import { GoogleLoginButton } from "@/features/auth/components/google-login-button";
 
-export default function RegisterForm() {
-  const { form, onSubmit, isPending } = useRegisterForm();
+export default function LoginForm() {
+  const { form, onSubmit, isPending } = useLoginForm();
   const { t } = useTranslation("common");
+  const searchParams = useSearchParams();
+  const errorType = searchParams.get("error");
 
   return (
     <Card className="w-[400px]">
       <CardHeader>
+        {errorType === "provider_mismatch" && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertTitle>{t("auth.error.providerMismatchTitle")}</AlertTitle>
+            <AlertDescription>
+              {t("auth.error.providerMismatchDescription")}
+            </AlertDescription>
+          </Alert>
+        )}
         <CardTitle className={"text-center"} role="heading" aria-level={2}>
-          {t("auth.registerTitle")}
+          {t("auth.loginTitle")}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("formFields.username")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder={t("formFields.usernamePlaceholder")}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name="email"
@@ -80,16 +77,41 @@ export default function RegisterForm() {
               )}
             />
             <Button type="submit" className="w-full" isLoading={isPending}>
-              {t("auth.registerTitle")}
+              {t("auth.loginTitle")}
             </Button>
           </form>
         </Form>
+
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">
+              {t("auth.orContinueWith")}
+            </span>
+          </div>
+        </div>
+        <GoogleLoginButton />
       </CardContent>
-      <CardFooter>
+      <CardFooter className={"flex flex-col gap-2"}>
         <CardDescription className={"text-center w-full"}>
-          {t("auth.haveAccountPrompt")}{" "}
-          <Link href={APP_PATHS.login} className="text-primary hover:underline">
-            {t("auth.loginTitle")}
+          {t("auth.noAccountPrompt")}{" "}
+          <Link
+            href={APP_PATHS.register}
+            className="text-primary hover:underline"
+          >
+            {t("auth.registerTitle")}
+          </Link>
+        </CardDescription>
+
+        <CardDescription className={"text-center w-full"}>
+          {t("auth.forgotPasswordPrompt")}{" "}
+          <Link
+            href={APP_PATHS.forgotPassword}
+            className="text-primary hover:underline"
+          >
+            {t("auth.resetPassword")}
           </Link>
         </CardDescription>
       </CardFooter>

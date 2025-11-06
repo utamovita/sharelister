@@ -16,6 +16,7 @@ import { envSchema } from './config/env.schema';
 import { EventsModule } from './events/event.module';
 import { GroupsModule } from './groups/groups.module';
 import { InvitationsModule } from './invitations/invitations.module';
+import { MailModule } from './mail/mail.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
@@ -42,6 +43,7 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
     EventsModule,
     InvitationsModule,
     AccountModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

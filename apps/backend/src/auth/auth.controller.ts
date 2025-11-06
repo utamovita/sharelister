@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Query,
   Req,
   Request,
   Res,
@@ -17,8 +18,12 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
 
 import { AuthService } from './auth.service';
-import { LoginUserDto } from './dto/login-user.dto';
-import { RegisterUserDto } from './dto/register-user.dto';
+import {
+  ForgotPasswordDto,
+  LoginUserDto,
+  RegisterUserDto,
+  ResetPasswordDto,
+} from './dto';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { JwtRefreshGuard } from './guard/jwt-refresh.guard';
 import { GoogleProfile } from './strategy/google.strategy';
@@ -42,8 +47,15 @@ export class AuthController {
     description: 'Conflict. User with this email already exists.',
   })
   async register(@Body() registerUserDto: RegisterUserDto) {
-    const tokens = await this.authService.register(registerUserDto);
-    return { success: true, data: tokens, message: 'success.register' };
+    const result = await this.authService.register(registerUserDto);
+    return { success: true, data: result, message: 'success.register' };
+  }
+
+  @Get('verify-email')
+  @ApiOperation({ summary: 'Verify user email' })
+  async verifyEmail(@Query('token') token: string) {
+    const tokens = await this.authService.verifyEmail(token);
+    return { success: true, data: tokens, message: 'success.emailVerified' };
   }
 
   @HttpCode(HttpStatus.OK)
@@ -113,5 +125,24 @@ export class AuthController {
       errorUrl.searchParams.set('error', 'unknown');
       res.redirect(errorUrl.toString());
     }
+  }
+
+  @Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Send password reset link' })
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    await this.authService.sendPasswordResetLink(forgotPasswordDto.email);
+    return { success: true, message: 'success.passwordResetLinkSent' };
+  }
+
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Reset password' })
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    await this.authService.resetPassword(
+      resetPasswordDto.token,
+      resetPasswordDto.password,
+    );
+    return { success: true, message: 'success.passwordReset' };
   }
 }

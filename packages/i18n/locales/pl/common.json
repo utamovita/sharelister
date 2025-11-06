@@ -20,6 +20,16 @@
     "logout": "Wyloguj się",
     "orContinueWith": "lub kontynuuj za pomocą",
     "loginWithGoogle": "Zaloguj się z Google",
+    "forgotPasswordPrompt": "Zapomniałeś hasła?",
+    "forgotPasswordTitle": "Resetowanie hasła",
+    "forgotPasswordDescription": "Podaj swój adres e-mail, a wyślemy Ci link do zresetowania hasła.",
+    "sendResetLink": "Wyślij link",
+    "backToLogin": "Wróć do logowania",
+    "resetPassword": "Zresetuj hasło",
+    "resetPasswordTitle": "Ustaw nowe hasło",
+    "resetPasswordDescription": "Wprowadź swoje nowe hasło poniżej.",
+    "saveNewPassword": "Zapisz nowe hasło",
+    "passwordResetSuccess": "Twoje hasło zostało zmienione. Możesz się teraz zalogować.",
     "error": {
       "providerMismatchTitle": "Błąd logowania",
       "providerMismatchDescription": "Konto z tym adresem e-mail już istnieje, ale zostało utworzone za pomocą hasła. Zaloguj się, używając swojego hasła.",
@@ -29,6 +39,8 @@
   "formFields": {
     "email": "Email",
     "password": "Hasło",
+    "newPassword": "Nowe hasło",
+    "confirmPassword": "Potwierdź hasło",
     "username": "Nazwa użytkownika",
     "usernamePlaceholder": "Jan Kowalski",
     "confirmation": "Potwierdź"

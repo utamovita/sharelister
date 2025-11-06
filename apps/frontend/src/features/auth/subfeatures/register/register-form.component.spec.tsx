@@ -1,13 +1,13 @@
 import { render, screen, renderHook, waitFor } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 import RegisterForm from "./register-form.component";
-import { useRegisterForm } from "../hooks/use-register-form.hook";
+import { useRegisterForm } from "./use-register-form.hook";
 import { registerSchema, type RegisterDto } from "@repo/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 
-jest.mock("../hooks/use-register-form.hook");
+jest.mock("./use-register-form.hook");
 
 const mockUseRegisterForm = useRegisterForm as jest.Mock;
 

@@ -12,14 +12,18 @@ datasource db {
 }
 
 model User {
-  id               String   @id @default(cuid())
-  email            String   @unique
-  name             String?
-  passwordHash     String?
-  refreshTokenHash String?
-  provider         String   @default("credentials")
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id                   String    @id @default(cuid())
+  email                String    @unique
+  name                 String?
+  passwordHash         String?
+  refreshTokenHash     String?
+  provider             String    @default("credentials")
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  emailVerified        DateTime?
+  verificationToken    String?   @unique
+  passwordResetToken   String?   @unique
+  passwordResetExpires DateTime?
 
   memberships     GroupMembership[]
   notifications   Notification[]

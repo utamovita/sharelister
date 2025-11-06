@@ -4,6 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { PrismaService } from 'src/prisma/prisma.service';
 
+import { MailModule } from '../mail/mail.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { GoogleStrategy } from './strategy/google.strategy';
@@ -21,6 +22,7 @@ import { JwtRefreshStrategy } from './strategy/jwt-refresh.strategy';
         signOptions: { expiresIn: '60m' },
       }),
     }),
+    MailModule,
   ],
   controllers: [AuthController],
   providers: [
