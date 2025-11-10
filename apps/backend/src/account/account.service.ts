@@ -3,6 +3,8 @@ import { UpdateUserDto } from '@repo/schemas';
 import { ROLES } from '@repo/types';
 import { PrismaService } from 'src/prisma/prisma.service';
 
+import { ChangeLangDto } from './dto';
+
 @Injectable()
 export class AccountService {
   constructor(private prisma: PrismaService) {}
@@ -77,5 +79,14 @@ export class AccountService {
       console.error(`Failed to delete account for user ${userId}:`, error);
       throw new InternalServerErrorException('Could not delete account.');
     }
+  }
+
+  async updateLanguage(userId: string, data: ChangeLangDto) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        lang: data.lang,
+      },
+    });
   }
 }

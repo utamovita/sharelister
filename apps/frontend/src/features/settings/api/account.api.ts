@@ -1,7 +1,7 @@
 import { apiClient } from "@/shared/lib/api/api-client";
 import { API_PATHS } from "@repo/config";
 import { UserProfile } from "@repo/types";
-import { UpdateUserDto } from "@repo/schemas";
+import { UpdateUserDto, UpdateUserLanguageDto } from "@repo/schemas";
 
 export const accountApi = {
   getProfile: async () => {
@@ -19,5 +19,12 @@ export const accountApi = {
   },
   deleteAccount: async () => {
     return apiClient.delete<null>(API_PATHS.account);
+  },
+  updateLanguage: async (data: UpdateUserLanguageDto) => {
+    const response = await apiClient.patch<{ success: boolean }>(
+      `${API_PATHS.account}/language`,
+      data,
+    );
+    return response.data;
   },
 };

@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
+import { I18nContext } from 'nestjs-i18n';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { MailService } from '../mail/mail.service';
@@ -37,16 +38,23 @@ export class AuthService {
 
     const verificationToken = crypto.randomBytes(32).toString('hex');
 
+    const lang = I18nContext.current()?.lang ?? 'en';
+
     const user = await this.prisma.user.create({
       data: {
         email,
         passwordHash: hashedPassword,
         name: username,
         verificationToken,
+        lang,
       },
     });
 
-    await this.mailService.sendVerificationEmail(user.email, verificationToken);
+    await this.mailService.sendVerificationEmail(
+      user.email,
+      verificationToken,
+      user.lang,
+    );
 
     return { message: 'Verification email sent.' };
   }
@@ -227,7 +235,7 @@ export class AuthService {
       data: { passwordResetToken, passwordResetExpires },
     });
 
-    await this.mailService.sendPasswordResetEmail(email, resetToken);
+    await this.mailService.sendPasswordResetEmail(email, resetToken, user.lang);
   }
 
   async resetPassword(token: string, newPassword: string) {

@@ -35,6 +35,10 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
         watch: true,
       },
       resolvers: [AcceptLanguageResolver],
+      typesOutputPath: path.join(
+        __dirname,
+        '../src/generated/i18n.generated.ts',
+      ),
     }),
     AuthModule,
     PrismaModule,

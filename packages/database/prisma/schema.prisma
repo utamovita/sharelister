@@ -15,6 +15,7 @@ model User {
   id                   String    @id @default(cuid())
   email                String    @unique
   name                 String?
+  lang                 String    @default("en")
   passwordHash         String?
   refreshTokenHash     String?
   provider             String    @default("credentials")

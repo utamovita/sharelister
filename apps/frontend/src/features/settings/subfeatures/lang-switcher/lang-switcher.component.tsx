@@ -10,12 +10,15 @@ import {
 } from "@/shared/ui/select";
 import { Label } from "@/shared/ui/label";
 import { languages } from "@/shared/lib/i18n/client";
+import { useUpdateLanguage } from "./use-update-language.hook";
 
 export function LanguageSwitcher() {
   const { t, i18n } = useTranslation("common");
+  const { mutate: updateLanguage } = useUpdateLanguage();
 
   const handleChangeLanguage = (langCode: string) => {
     i18n.changeLanguage(langCode);
+    updateLanguage({ lang: langCode as "pl" | "en" });
   };
 
   const currentLanguage = i18n.language?.split("-")[0];

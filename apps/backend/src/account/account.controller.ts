@@ -15,7 +15,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import type { UpdateUserDto } from '@repo/schemas';
+import type { UpdateUserDto, UpdateUserLanguageDto } from '@repo/schemas';
 import { type SuccessResponse, UserProfile } from '@repo/types';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
@@ -69,5 +69,21 @@ export class AccountController {
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   async deleteAccount(@Request() req: { user: UserProfile }): Promise<void> {
     await this.accountService.deleteAccount(req.user.id);
+  }
+
+  @Patch('language')
+  @ApiOperation({ summary: "Update current user's language preference" })
+  async updateLanguage(
+    @Request() req: { user: UserProfile },
+    @Body() updateUserLanguageDto: UpdateUserLanguageDto,
+  ) {
+    await this.accountService.updateLanguage(
+      req.user.id,
+      updateUserLanguageDto,
+    );
+    return {
+      success: true,
+      message: 'success.languageUpdated',
+    };
   }
 }

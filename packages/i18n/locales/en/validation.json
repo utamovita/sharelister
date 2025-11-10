@@ -26,7 +26,8 @@
     "profileUpdated": "Your username has been updated successfully.",
     "emailVerified": "Email address successfully verified.",
     "passwordResetLinkSent": "If an account exists, a password reset link has been sent.",
-    "passwordReset": "Password has been successfully reset."
+    "passwordReset": "Password has been successfully reset.",
+    "languageUpdated": "Language has been updated."
   },
   "error": {
     "generic": "An error occurred. Please try again later.",

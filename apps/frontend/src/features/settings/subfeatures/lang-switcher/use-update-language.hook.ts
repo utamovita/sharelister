@@ -1,19 +1,17 @@
-"use client";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { accountApi } from "../api/account.api";
+import { accountApi } from "../../api/account.api";
 import { handleError } from "@/shared/lib/error/handle-error";
 import { toast } from "sonner";
-import { useTranslation } from "react-i18next";
 import { useUiStore } from "@/shared/store/ui.store";
+import { useTranslation } from "react-i18next";
 
-export function useUpdateProfile() {
+export function useUpdateLanguage() {
   const queryClient = useQueryClient();
-  const { t } = useTranslation("validation");
   const { closeSheet } = useUiStore();
+  const { t } = useTranslation("validation");
 
   return useMutation({
-    mutationFn: accountApi.updateProfile,
+    mutationFn: accountApi.updateLanguage,
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ["profile"] });
 

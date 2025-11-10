@@ -1,0 +1,22 @@
+{
+  "verification": {
+    "subject": "Confirm your email address for Sharelister",
+    "preview": "Confirm your email address for Sharelister",
+    "greeting": "Hi,",
+    "line1": "Thanks for signing up for Sharelister! To complete the process, please click the button below to confirm your email address.",
+    "button": "Confirm Email",
+    "line2": "If the button doesn't work, copy and paste the following link into your browser:",
+    "line3": "If you did not create this account, please ignore this message.",
+    "salutation": "Best regards,<br />The Sharelister Team"
+  },
+  "passwordReset": {
+    "subject": "Reset your password for Sharelister",
+    "preview": "Reset your password for Sharelister",
+    "greeting": "Hi,",
+    "line1": "We received a request to reset the password for your Sharelister account. Click the button below to set a new password.",
+    "button": "Reset Password",
+    "line2": "If the button doesn't work, copy and paste the following link into your browser:",
+    "line3": "This link is valid for 1 hour. If you didn't request a password change, please ignore this message.",
+    "salutation": "Best regards,<br />The Sharelister Team"
+  }
+}

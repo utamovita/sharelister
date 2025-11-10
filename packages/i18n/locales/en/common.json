@@ -20,7 +20,7 @@
     "logout": "Logout",
     "orContinueWith": "or continue with",
     "loginWithGoogle": "Log in with Google",
-    "forgotPassword": "Forgot your password?",
+    "forgotPasswordPrompt": "Forgot your password?",
     "forgotPasswordTitle": "Reset Password",
     "forgotPasswordDescription": "Enter your email address and we'll send you a link to reset your password.",
     "sendResetLink": "Send reset link",
@@ -105,8 +105,7 @@
     "account": {
       "title": "Account",
       "description": "Manage your account details.",
-      "updateButton": "Update details",
-      "deleteButton": "Delete Account"
+      "updateButton": "Update details"
     },
     "app": {
       "title": "App",

@@ -85,6 +85,7 @@ describe('AuthService', () => {
       expect(mailService.sendVerificationEmail).toHaveBeenCalledWith(
         dto.email,
         expect.any(String),
+        expect.any(String),
       );
       expect(result).toEqual({ message: 'Verification email sent.' });
     });

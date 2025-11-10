@@ -1,0 +1,22 @@
+{
+  "verification": {
+    "subject": "Potwierdź swój adres e-mail w Sharelister",
+    "preview": "Potwierdź swój adres e-mail w Sharelister",
+    "greeting": "Cześć,",
+    "line1": "Dziękujemy za rejestrację w Sharelister! Aby dokończyć proces, kliknij w poniższy przycisk i potwierdź swój adres e-mail.",
+    "button": "Potwierdź e-mail",
+    "line2": "Jeśli przycisk nie działa, skopiuj i wklej poniższy link w swojej przeglądarce:",
+    "line3": "Jeśli to nie Ty zakładałeś konto, zignoruj tę wiadomość.",
+    "salutation": "Pozdrawiamy,<br />Zespół Sharelister"
+  },
+  "passwordReset": {
+    "subject": "Zresetuj swoje hasło w Sharelister",
+    "preview": "Zresetuj swoje hasło w Sharelister",
+    "greeting": "Cześć,",
+    "line1": "Otrzymaliśmy prośbę o zresetowanie hasła do Twojego konta w Sharelister. Kliknij poniższy przycisk, aby ustawić nowe hasło.",
+    "button": "Zresetuj hasło",
+    "line2": "Jeśli przycisk nie działa, skopiuj i wklej poniższy link w swojej przeglądarce:",
+    "line3": "Ten link jest ważny przez 1 godzinę. Jeśli to nie Ty prosiłeś o zmianę hasła, zignoruj tę wiadomość.",
+    "salutation": "Pozdrawiamy,<br />Zespół Sharelister"
+  }
+}

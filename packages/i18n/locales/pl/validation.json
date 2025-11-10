@@ -26,7 +26,8 @@
     "profileUpdated": "Twoja nazwa użytkownika została pomyślnie zaktualizowana.",
     "emailVerified": "Adres e-mail został pomyślnie zweryfikowany.",
     "passwordResetLinkSent": "Jeśli konto istnieje, link do resetu hasła został wysłany.",
-    "passwordReset": "Hasło zostało pomyślnie zresetowane."
+    "passwordReset": "Hasło zostało pomyślnie zresetowane.",
+    "languageUpdated": "Język został zaktualizowany."
   },
   "error": {
     "generic": "Wystąpił błąd. Proszę spróbować ponownie później.",

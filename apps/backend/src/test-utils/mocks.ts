@@ -5,6 +5,7 @@ export const createMockUser = (overrides: Partial<User> = {}): User => {
     id: 'default-user-id',
     email: 'test@example.com',
     name: 'Default User',
+    lang: 'en',
     passwordHash: 'default-hashed-password',
     provider: 'credentials',
     createdAt: new Date(),

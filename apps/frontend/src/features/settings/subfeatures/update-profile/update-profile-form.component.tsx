@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUserSchema, UpdateUserDto } from "@repo/schemas";
-import { useProfile } from "../hooks/use-profile.hook";
-import { useUpdateProfile } from "../hooks/use-update-profile.hook";
+import { useProfile } from "../../hooks/use-profile.hook";
+import { useUpdateProfile } from "./use-update-profile.hook";
 import {
   Form,
   FormControl,

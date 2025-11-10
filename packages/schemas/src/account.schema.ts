@@ -10,3 +10,9 @@ export const updateUserSchema = z.object({
 });
 
 export type UpdateUserDto = z.infer<typeof updateUserSchema>;
+
+export const updateUserLanguageSchema = z.object({
+  lang: z.enum(["pl", "en"]),
+});
+
+export type UpdateUserLanguageDto = z.infer<typeof updateUserLanguageSchema>;
