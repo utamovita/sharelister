@@ -21,6 +21,7 @@ import type { ShoppingListItem } from '@repo/database';
 import type { SuccessResponse, UserProfile } from '@repo/types';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
+import { GroupMemberGuard } from '../auth/guard/guard-member.guard';
 import {
   CreateShoppingListItemDto,
   RemoveShoppingListItemsDto,
@@ -33,7 +34,7 @@ import { ShoppingListService } from './shopping-list.service';
 @ApiTags('Shopping List')
 @ApiBearerAuth()
 @Controller('groups/:groupId/items')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, GroupMemberGuard)
 export class ShoppingListController {
   constructor(private readonly shoppingListService: ShoppingListService) {}
 
@@ -48,12 +49,8 @@ export class ShoppingListController {
   })
   async getItems(
     @Param() params: Pick<ShoppingListItemParamsDto, 'groupId'>,
-    @Request() req: { user: UserProfile },
   ): Promise<SuccessResponse<ShoppingListItem[]>> {
-    const items = await this.shoppingListService.getItems(
-      params.groupId,
-      req.user.id,
-    );
+    const items = await this.shoppingListService.getItems(params.groupId);
     return { success: true, data: items };
   }
 
@@ -62,12 +59,10 @@ export class ShoppingListController {
   @ApiOperation({ summary: 'Reorder shopping list items' })
   async reorderItems(
     @Param('groupId') groupId: string,
-    @Request() req: { user: UserProfile },
     @Body() reorderDto: ReorderShoppingListDto,
   ): Promise<SuccessResponse<{ success: boolean }>> {
     const result = await this.shoppingListService.reorderItems(
       groupId,
-      req.user.id,
       reorderDto.items,
     );
     return { success: true, data: result };
@@ -100,26 +95,19 @@ export class ShoppingListController {
   async removeItems(
     @Param('groupId') groupId: string,
     @Body() removeItemsDto: RemoveShoppingListItemsDto,
-    @Request() req: { user: UserProfile },
   ) {
-    await this.shoppingListService.removeItems(
-      removeItemsDto.itemIds,
-      groupId,
-      req.user.id,
-    );
+    await this.shoppingListService.removeItems(removeItemsDto.itemIds, groupId);
   }
 
   @Patch(':itemId')
   @ApiOperation({ summary: 'Update a shopping list item' })
   async updateItem(
     @Param() params: ShoppingListItemParamsDto,
-    @Request() req: { user: UserProfile },
     @Body() updateDto: UpdateShoppingListItemDto,
   ): Promise<SuccessResponse<ShoppingListItem>> {
     const updatedItem = await this.shoppingListService.updateItem(
       params.itemId,
       params.groupId,
-      req.user.id,
       updateDto,
     );
     return { success: true, data: updatedItem };

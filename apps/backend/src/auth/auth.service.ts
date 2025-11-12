@@ -218,7 +218,7 @@ export class AuthService {
   async sendPasswordResetLink(email: string) {
     const user = await this.prisma.user.findUnique({ where: { email } });
 
-    if (!user) {
+    if (!user || user.provider !== 'credentials') {
       return;
     }
 

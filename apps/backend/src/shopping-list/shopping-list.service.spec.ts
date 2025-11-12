@@ -1,4 +1,3 @@
-import { ForbiddenException } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { EVENT_NAME } from '@repo/config';
@@ -13,15 +12,16 @@ describe('ShoppingListService', () => {
   let eventEmitter: EventEmitter2;
 
   const mockPrismaService = {
-    groupMembership: {
-      findUnique: jest.fn(),
-    },
     shoppingListItem: {
       create: jest.fn(),
       findMany: jest.fn(),
       deleteMany: jest.fn(),
       aggregate: jest.fn(),
+      update: jest.fn(),
     },
+    $transaction: jest
+      .fn()
+      .mockImplementation((updates) => Promise.all(updates)),
   };
 
   const mockEventEmitter = {
@@ -64,22 +64,10 @@ describe('ShoppingListService', () => {
       quantity: 1,
       groupId,
     },
-    {
-      id: 'item-2',
-      name: 'Bread',
-      quantity: 1,
-      groupId,
-    },
-    {
-      id: 'item-3',
-      name: 'Cheese',
-      quantity: 1,
-      groupId,
-    },
   ] as const;
 
   describe('addItem', () => {
-    it('should add an item if user is a member (happy path)', async () => {
+    it('should add an item and emit an event', async () => {
       const dto = { name: 'Milk', quantity: 1 };
       const expectedItem = {
         id: 'item-1',
@@ -88,7 +76,6 @@ describe('ShoppingListService', () => {
         groupId,
       } as ShoppingListItem;
 
-      mockPrismaService.groupMembership.findUnique.mockResolvedValue({});
       mockPrismaService.shoppingListItem.aggregate.mockResolvedValue({
         _max: { order: null },
       });
@@ -111,32 +98,18 @@ describe('ShoppingListService', () => {
       );
       expect(result).toEqual(expectedItem);
     });
-
-    it('should throw ForbiddenException if user is not a member (sad path)', async () => {
-      const dto = { name: 'Milk', quantity: 1 };
-
-      mockPrismaService.groupMembership.findUnique.mockResolvedValue(null);
-
-      await expect(service.addItem(groupId, dto, userId)).rejects.toThrow(
-        ForbiddenException,
-      );
-
-      expect(eventEmitter.emit).not.toHaveBeenCalled();
-    });
   });
 
   describe('getItems', () => {
-    it('should return items if user is a member (happy path)', async () => {
+    it('should return items for a group', async () => {
       const expectedItems = [
         { id: 'item-1', name: 'Milk', groupId },
       ] as ShoppingListItem[];
-
-      mockPrismaService.groupMembership.findUnique.mockResolvedValue({});
       mockPrismaService.shoppingListItem.findMany.mockResolvedValue(
         expectedItems,
       );
 
-      const result = await service.getItems(groupId, userId);
+      const result = await service.getItems(groupId);
 
       expect(prisma.shoppingListItem.findMany).toHaveBeenCalledWith({
         where: { groupId },
@@ -144,24 +117,15 @@ describe('ShoppingListService', () => {
       });
       expect(result).toEqual(expectedItems);
     });
-
-    it('should throw ForbiddenException if user is not a member (sad path)', async () => {
-      mockPrismaService.groupMembership.findUnique.mockResolvedValue(null);
-
-      await expect(service.getItems(groupId, userId)).rejects.toThrow(
-        ForbiddenException,
-      );
-    });
   });
 
   describe('removeItems', () => {
-    it('should remove an item and emit an event if user is a member', async () => {
-      mockPrismaService.groupMembership.findUnique.mockResolvedValue({});
+    it('should remove items and emit an event', async () => {
       mockPrismaService.shoppingListItem.deleteMany.mockResolvedValue({
         count: 1,
       });
 
-      await service.removeItems([mockItems[0].id], groupId, userId);
+      await service.removeItems([mockItems[0].id], groupId);
 
       expect(prisma.shoppingListItem.deleteMany).toHaveBeenCalledWith({
         where: {
@@ -176,15 +140,6 @@ describe('ShoppingListService', () => {
         EVENT_NAME.shoppingListUpdated,
         groupId,
       );
-    });
-
-    it('should throw ForbiddenException if user is not a member', async () => {
-      mockPrismaService.groupMembership.findUnique.mockResolvedValue(null);
-
-      await expect(
-        service.removeItems([mockItems[0].id], groupId, userId),
-      ).rejects.toThrow(ForbiddenException);
-      expect(eventEmitter.emit).not.toHaveBeenCalled();
     });
   });
 });

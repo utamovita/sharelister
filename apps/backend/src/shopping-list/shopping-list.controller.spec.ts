@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { createMockUser } from 'src/test-utils/mocks';
 
+import { GroupMemberGuard } from '../auth/guard/guard-member.guard';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
-import { RolesGuard } from '../auth/guard/roles.guard';
 import { ShoppingListController } from './shopping-list.controller';
 import { ShoppingListService } from './shopping-list.service';
 
@@ -28,7 +28,7 @@ describe('ShoppingListController', () => {
     })
       .overrideGuard(JwtAuthGuard)
       .useValue({ canActivate: jest.fn(() => true) })
-      .overrideGuard(RolesGuard)
+      .overrideGuard(GroupMemberGuard)
       .useValue({ canActivate: jest.fn(() => true) })
       .compile();
 
@@ -80,9 +80,9 @@ describe('ShoppingListController', () => {
     it('should call service.getItems with correct params and return items', async () => {
       mockShoppingListService.getItems.mockResolvedValue(mockItems);
 
-      const result = await controller.getItems({ groupId }, mockRequest);
+      const result = await controller.getItems({ groupId });
 
-      expect(service.getItems).toHaveBeenCalledWith(groupId, mockUser.id);
+      expect(service.getItems).toHaveBeenCalledWith(groupId);
       expect(result).toEqual({ success: true, data: mockItems });
     });
   });
@@ -104,17 +104,9 @@ describe('ShoppingListController', () => {
     it('should call service.remove-item with correct params', async () => {
       mockShoppingListService.removeItems.mockResolvedValue(undefined);
       const removeItemIds = mockItems.map((item) => item.id);
-      await controller.removeItems(
-        groupId,
-        { itemIds: removeItemIds },
-        mockRequest,
-      );
+      await controller.removeItems(groupId, { itemIds: removeItemIds });
 
-      expect(service.removeItems).toHaveBeenCalledWith(
-        removeItemIds,
-        groupId,
-        mockUser.id,
-      );
+      expect(service.removeItems).toHaveBeenCalledWith(removeItemIds, groupId);
     });
   });
 });

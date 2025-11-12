@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { EVENT_NAME } from '@repo/config';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -15,9 +15,7 @@ export class ShoppingListService {
     private eventEmitter: EventEmitter2,
   ) {}
 
-  async getItems(groupId: string, userId: string) {
-    await this.checkIfUserIsMember(groupId, userId);
-
+  async getItems(groupId: string) {
     return this.prisma.shoppingListItem.findMany({
       where: {
         groupId,
@@ -33,8 +31,6 @@ export class ShoppingListService {
     createShoppingListItemDto: CreateShoppingListItemDto,
     userId: string,
   ) {
-    await this.checkIfUserIsMember(groupId, userId);
-
     const maxOrderResult = await this.prisma.shoppingListItem.aggregate({
       _max: {
         order: true,
@@ -63,11 +59,8 @@ export class ShoppingListService {
 
   async reorderItems(
     groupId: string,
-    userId: string,
     orderedItems: { id: string; order: number }[],
   ) {
-    await this.checkIfUserIsMember(groupId, userId);
-
     const updates = orderedItems.map((item) =>
       this.prisma.shoppingListItem.update({
         where: { id: item.id, groupId: groupId },
@@ -82,9 +75,7 @@ export class ShoppingListService {
     return { success: true };
   }
 
-  async removeItems(itemIds: string[], groupId: string, userId: string) {
-    await this.checkIfUserIsMember(groupId, userId);
-
+  async removeItems(itemIds: string[], groupId: string) {
     const result = await this.prisma.shoppingListItem.deleteMany({
       where: {
         id: {
@@ -102,11 +93,8 @@ export class ShoppingListService {
   async updateItem(
     itemId: string,
     groupId: string,
-    userId: string,
     updateDto: UpdateShoppingListItemDto,
   ) {
-    await this.checkIfUserIsMember(groupId, userId);
-
     const dataToUpdate = {
       ...(updateDto.name !== undefined && { name: updateDto.name }),
       ...(updateDto.quantity !== undefined && {
@@ -124,20 +112,5 @@ export class ShoppingListService {
 
     this.eventEmitter.emit(EVENT_NAME.shoppingListUpdated, groupId);
     return updatedItem;
-  }
-
-  private async checkIfUserIsMember(groupId: string, userId: string) {
-    const membership = await this.prisma.groupMembership.findUnique({
-      where: {
-        userId_groupId: {
-          userId,
-          groupId,
-        },
-      },
-    });
-
-    if (!membership) {
-      throw new ForbiddenException('group.notAMember');
-    }
   }
 }
