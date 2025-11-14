@@ -47,6 +47,7 @@
     "@repo/schemas": "workspace:^",
     "@repo/types": "workspace:^",
     "@repo/typescript-config": "workspace:^",
+    "@trpc/server": "^11.7.1",
     "@types/passport-google-oauth20": "^2.0.17",
     "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",

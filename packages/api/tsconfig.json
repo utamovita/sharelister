@@ -1,0 +1,10 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "backend/*": ["../../apps/backend/*"]
+    }
+  },
+  "include": ["index.ts"]
+}

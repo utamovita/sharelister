@@ -5,6 +5,7 @@ import { ZodValidationPipe } from 'nestjs-zod';
 
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { TrpcRouter } from './trpc/trpc.router';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,6 +21,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ZodValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableShutdownHooks();
+
+  await app.init();
+
+  const trpcRouter = app.get(TrpcRouter);
+  trpcRouter.applyMiddleware(app);
 
   const config = new DocumentBuilder()
     .setTitle('Shopping List API')

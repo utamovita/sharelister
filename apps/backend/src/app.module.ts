@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { JwtModule } from '@nestjs/jwt';
 import {
   AcceptLanguageResolver,
   I18nJsonLoader,
@@ -19,6 +20,7 @@ import { InvitationsModule } from './invitations/invitations.module';
 import { MailModule } from './mail/mail.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
+import { TrpcModule } from './trpc/trpc.module';
 
 @Module({
   imports: [
@@ -48,6 +50,8 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
     InvitationsModule,
     AccountModule,
     MailModule,
+    JwtModule.register({}),
+    TrpcModule,
   ],
   controllers: [AppController],
   providers: [AppService],
