@@ -407,6 +407,8 @@ importers:
         specifier: ^5
         version: 5.9.2
 
+  packages/api: {}
+
   packages/config:
     devDependencies:
       tsup:
