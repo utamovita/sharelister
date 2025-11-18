@@ -1,23 +1,17 @@
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@repo/database';
+import { TRPCContext } from '@repo/trpc';
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 
 import { PrismaService } from '../prisma/prisma.service';
-
-export interface ContextType {
-  user: User | null;
-  prisma: PrismaService;
-}
-
-export type TRCPContext = ContextType;
 
 export const createTRPCContext = async (
   { req }: CreateExpressContextOptions,
   prisma: PrismaService,
   jwtService: JwtService,
   configService: ConfigService,
-): Promise<TRCPContext> => {
+): Promise<TRPCContext> => {
   async function getUserFromHeader(): Promise<User | null> {
     if (req.headers.authorization) {
       const token = req.headers.authorization.split(' ')[1];

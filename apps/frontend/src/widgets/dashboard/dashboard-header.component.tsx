@@ -9,11 +9,11 @@ import { useTranslation } from "react-i18next";
 import { InvitationsBell } from "@/features/groups/subfeatures/invitations/invitations-bell.component";
 import { LoadingLink } from "@/shared/components/loading-link.component";
 import { SHEET_TYPES, useUiStore } from "@/shared/store/ui.store";
-import { useProfile } from "@/features/settings/hooks/use-profile.hook";
+import { trpc } from "@repo/trpc/react";
 
 export function DashboardHeader() {
   const pathname = usePathname();
-  const { data: profile } = useProfile();
+  const { data: profile } = trpc.account.getProfile.useQuery();
   const { t } = useTranslation();
   const openSheet = useUiStore((state) => state.openSheet);
 
@@ -31,8 +31,8 @@ export function DashboardHeader() {
           </LoadingLink>
         )}
         <h1 className="text-2xl font-bold">
-          {isDashboardHome && profile?.data.name
-            ? `${greeting}, ${profile.data.name}!`
+          {isDashboardHome && profile?.name
+            ? `${greeting}, ${profile.name}!`
             : ""}
         </h1>
       </div>

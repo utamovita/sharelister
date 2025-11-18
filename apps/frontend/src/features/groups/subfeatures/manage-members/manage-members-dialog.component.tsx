@@ -22,7 +22,7 @@ import {
 import type { Role } from "@repo/types";
 import { useTranslation } from "react-i18next";
 import { ROLES } from "@repo/types";
-import { useProfile } from "@/features/settings/hooks/use-profile.hook";
+import { trpc } from "@repo/trpc/react";
 
 type ManageMembersDialogProps = {
   group: GroupWithDetails;
@@ -36,11 +36,9 @@ export function ManageMembersDialog({
   onOpenChange,
 }: ManageMembersDialogProps) {
   const { t } = useTranslation("common");
-  const { data: profile } = useProfile();
+  const { data: profile } = trpc.account.getProfile.useQuery();
   const { mutate: removeMember, isPending: isRemoving } = useRemoveMember();
   const { mutate: updateRole, isPending: isUpdating } = useUpdateMemberRole();
-
-  const currentUser = profile?.data;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -73,7 +71,7 @@ export function ManageMembersDialog({
                           role: newRole as Role,
                         })
                       }
-                      disabled={user.id === currentUser?.id || isUpdating}
+                      disabled={user.id === profile?.id || isUpdating}
                     >
                       <SelectTrigger className="w-[110px] h-8">
                         <SelectValue />
@@ -94,7 +92,7 @@ export function ManageMembersDialog({
                       onClick={() =>
                         removeMember({ groupId: group.id, memberId: user.id })
                       }
-                      disabled={user.id === currentUser?.id || isRemoving}
+                      disabled={user.id === profile?.id || isRemoving}
                     >
                       <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>

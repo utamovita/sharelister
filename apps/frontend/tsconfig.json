@@ -20,7 +20,18 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@repo/config": ["../../packages/config/src"],
+      "@repo/config/*": ["../../packages/config/src/*"],
+      "@repo/database": ["../../packages/database/src"],
+      "@repo/database/*": ["../../packages/database/src/*"],
+      "@repo/schemas": ["../../packages/schemas/src"],
+      "@repo/schemas/*": ["../../packages/schemas/src/*"],
+      "@repo/trpc": ["../../packages/trpc/src"],
+      "@repo/trpc/react": ["../../packages/trpc/src/react"],
+      "@repo/trpc/services": ["../../packages/trpc/src/services"],
+      "@repo/types": ["../../packages/types/src"],
+      "@repo/types/*": ["../../packages/types/src/*"]
     },
     "types": ["jest", "node"]
   },

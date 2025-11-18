@@ -1,12 +1,13 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { UpdateUserDto } from '@repo/schemas';
+import type { IAccountService } from '@repo/trpc/services';
 import { ROLES } from '@repo/types';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { ChangeLangDto } from './dto';
 
 @Injectable()
-export class AccountService {
+export class AccountService implements IAccountService {
   constructor(private prisma: PrismaService) {}
 
   async updateProfile(userId: string, updateUserDto: UpdateUserDto) {

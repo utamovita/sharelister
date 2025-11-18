@@ -1,0 +1,51 @@
+{
+  "name": "@repo/trpc",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.mjs",
+      "require": "./dist/react.js"
+    },
+    "./services": {
+      "types": "./dist/services.d.ts",
+      "import": "./dist/services.mjs",
+      "require": "./dist/services.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.mjs",
+      "require": "./dist/types.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint . --fix"
+  },
+  "dependencies": {
+    "@repo/database": "workspace:^",
+    "@repo/schemas": "workspace:*",
+    "@repo/typescript-config": "workspace:^",
+    "@tanstack/react-query": "^5.85.2",
+    "@trpc/client": "^11.7.1",
+    "@trpc/react-query": "^11.7.1",
+    "@trpc/server": "^11.7.1",
+    "zod": "^4.0.17"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:^",
+    "eslint": "^9.18.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.7.3"
+  }
+}

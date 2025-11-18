@@ -1,6 +1,6 @@
 import { All, Controller, Next, Req, Res } from '@nestjs/common';
 import * as trpcExpress from '@trpc/server/adapters/express';
-import type { NextFunction, Request, Response } from 'express'; // Import NextFunction
+import type { NextFunction, Request, Response } from 'express';
 
 import { TrpcService } from './trpc.service';
 
@@ -15,7 +15,7 @@ export class TrpcController {
     @Next() next: NextFunction,
   ) {
     const handler = trpcExpress.createExpressMiddleware({
-      router: this.trpcService.appRouter,
+      router: this.trpcService.trpcRouter.appRouter,
       createContext: this.trpcService.createContext,
     });
 

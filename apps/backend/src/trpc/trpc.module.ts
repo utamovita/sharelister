@@ -5,12 +5,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { AccountModule } from '../account/account.module';
 import { PrismaModule } from '../prisma/prisma.module';
 import { TrpcController } from './trpc.controller';
+import { TrpcRouter } from './trpc.router';
 import { TrpcService } from './trpc.service';
 
 @Module({
   imports: [PrismaModule, AccountModule, JwtModule.register({}), ConfigModule],
   controllers: [TrpcController],
-  providers: [TrpcService],
-  exports: [TrpcService],
+  providers: [TrpcService, TrpcRouter],
+  exports: [TrpcService, TrpcRouter],
 })
 export class TrpcModule {}
