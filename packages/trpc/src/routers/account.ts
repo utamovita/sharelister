@@ -1,20 +1,15 @@
 import { updateUserLanguageSchema, updateUserSchema } from "@repo/schemas";
-import { protectedProcedure, router } from "../trpc";
+import { router } from "../trpc";
 
 import type { IAccountService } from "../services";
+import { protectedProcedure } from "../procedures";
 
 export const createAccountRouter = (accountService: IAccountService) => {
   return router({
     getProfile: protectedProcedure.query(({ ctx }) => {
-      const {
-        passwordHash,
-        refreshTokenHash,
-        passwordResetToken,
-        passwordResetExpires,
-        verificationToken,
-        ...userProfile
-      } = ctx.user;
-      return userProfile;
+      const { name, id } = ctx.user;
+
+      return { name, id };
     }),
 
     updateProfile: protectedProcedure

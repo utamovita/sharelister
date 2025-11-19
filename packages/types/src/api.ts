@@ -1,8 +1,4 @@
-import type {
-  User,
-  Group,
-  Invitation as PrismaInvitation,
-} from "@repo/database";
+import type { User, Invitation as PrismaInvitation } from "@repo/database";
 
 export type SuccessResponse<T> = {
   success: true;
@@ -38,12 +34,12 @@ export type GroupMember = {
   };
 };
 
-export type GroupWithDetails = Group & {
-  _count: {
-    shoppingItems: number;
-  };
+export type GroupWithDetails = {
+  id: string;
+  name: string;
+  itemCount: number;
+  currentUserRole: Role;
   members: GroupMember[];
-  currentUserRole?: Role;
 };
 
 export type Invitation = PrismaInvitation & {

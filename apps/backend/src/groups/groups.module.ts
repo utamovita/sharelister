@@ -9,5 +9,6 @@ import { GroupsService } from './groups.service';
   imports: [PrismaModule],
   providers: [GroupsService],
   controllers: [GroupsController, GroupAdminController],
+  exports: [GroupsService],
 })
 export class GroupsModule {}

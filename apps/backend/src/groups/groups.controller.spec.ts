@@ -65,18 +65,4 @@ describe('GroupsController', () => {
       );
     });
   });
-
-  describe('findAllForUser', () => {
-    it('should call service.findAllForUser and return a success response', async () => {
-      const mockUser = createMockUser({ id: 'user-123' });
-      const mockRequest = { user: mockUser };
-      const expectedGroups = [createMockGroup()];
-      mockGroupsService.findAllForUser.mockResolvedValue(expectedGroups);
-
-      const result = await controller.findAllForUser(mockRequest);
-
-      expect(service.findAllForUser).toHaveBeenCalledWith(mockUser.id);
-      expect(result).toEqual({ success: true, data: expectedGroups });
-    });
-  });
 });

@@ -1,15 +1,9 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { groupsApi } from "../api/groups.api";
-import { useAuthStore } from "@/shared/store/auth.store";
+import { trpc } from "@repo/trpc/react";
 
 export function useGroups() {
-  const token = useAuthStore((state) => state.accessToken);
+  const response = trpc.groups.getAll.useQuery();
 
-  return useQuery({
-    queryKey: ["groups", token],
-    queryFn: groupsApi.getAll,
-    enabled: !!token,
-  });
+  return response;
 }

@@ -1,4 +1,3 @@
-// File: apps/backend/src/trpc/trpc.service.ts
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';

@@ -36,6 +36,7 @@
     "@repo/database": "workspace:^",
     "@repo/schemas": "workspace:*",
     "@repo/typescript-config": "workspace:^",
+    "@repo/types": "workspace:^",
     "@tanstack/react-query": "^5.85.2",
     "@trpc/client": "^11.7.1",
     "@trpc/react-query": "^11.7.1",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:^",
+
     "eslint": "^9.18.0",
     "tsup": "^8.5.0",
     "typescript": "^5.7.3"

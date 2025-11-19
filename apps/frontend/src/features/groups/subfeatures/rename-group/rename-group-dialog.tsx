@@ -1,4 +1,3 @@
-import type { Group } from "@repo/database";
 import { Button } from "@/shared/ui/button";
 import {
   Form,
@@ -20,9 +19,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { GroupWithDetails } from "@repo/types";
 
 type RenameGroupDialogProps = {
-  group: Group;
+  group: GroupWithDetails;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };

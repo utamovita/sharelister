@@ -5,6 +5,7 @@ import { useDeleteGroup } from "./use-delete-group.hook";
 import type { Group } from "@repo/database";
 import { DIALOG_TYPES, useUiStore } from "@/shared/store/ui.store";
 import { DialogManager } from "@/widgets/dialog-manager";
+import { GroupWithDetails } from "@repo/types";
 
 jest.mock("./use-delete-group.hook");
 jest.mock("react-i18next", () => ({
@@ -16,11 +17,12 @@ jest.mock("react-i18next", () => ({
 
 const mockUseDeleteGroup = useDeleteGroup as jest.Mock;
 
-const mockGroup: Group = {
+const mockGroup: GroupWithDetails = {
   id: "group-123",
   name: "Test Group Name",
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  itemCount: 5,
+  currentUserRole: "ADMIN",
+  members: [],
 };
 
 const TestBed = () => {

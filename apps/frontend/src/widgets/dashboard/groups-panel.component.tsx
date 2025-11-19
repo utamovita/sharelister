@@ -28,13 +28,13 @@ export function GroupsPanel() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {groups.data.map((group) => (
+        {groups.map((group) => (
           <GroupCard key={group.id} group={group} />
         ))}
         <AddGroupCard />
       </div>
 
-      {groups.data.length === 0 && (
+      {groups.length === 0 && (
         <p className="text-muted-foreground pt-4 text-center">
           {t("common:group.noGroups")}
         </p>

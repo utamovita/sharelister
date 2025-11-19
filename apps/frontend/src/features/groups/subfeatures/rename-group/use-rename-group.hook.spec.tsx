@@ -3,7 +3,7 @@ import { useRenameGroup } from "./use-rename-group.hook";
 import { groupsApi } from "@/features/groups/api/groups.api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { GroupWithDetails, SuccessResponse } from "@repo/types";
+import { GroupWithDetails, ROLES, SuccessResponse } from "@repo/types";
 
 jest.mock("../../api/groups.api");
 jest.mock("sonner");
@@ -31,15 +31,14 @@ describe("useUpdateGroup", () => {
 
     const mockResponse: SuccessResponse<GroupWithDetails> = {
       success: true,
+      message: "group.changeNameDialog.success",
       data: {
         id: updateData.groupId,
         name: updateData.data.name,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        _count: { shoppingItems: 0 },
         members: [],
+        itemCount: 1,
+        currentUserRole: ROLES.ADMIN,
       },
-      message: "group.changeNameDialog.success",
     };
     mockGroupsApi.update.mockResolvedValue(mockResponse);
 

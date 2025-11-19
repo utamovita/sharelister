@@ -2,6 +2,8 @@
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
     "target": "ES2017",
+    "declaration": false,
+    "declarationMap": false,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,

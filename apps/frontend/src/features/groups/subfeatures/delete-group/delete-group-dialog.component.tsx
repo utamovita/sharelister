@@ -1,4 +1,3 @@
-import type { Group } from "@repo/database";
 import { Button } from "@/shared/ui/button";
 import { useDeleteGroup } from "./use-delete-group.hook";
 import { useTranslation } from "react-i18next";
@@ -9,9 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { GroupWithDetails } from "@repo/types";
 
 type DeleteGroupDialogProps = {
-  group: Group;
+  group: GroupWithDetails;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };

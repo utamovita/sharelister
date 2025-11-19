@@ -38,7 +38,7 @@ export function GroupCard({ group }: GroupCardProps) {
             <div className="flex items-center gap-1">
               <List className="h-4 w-4" />
               <span>
-                {group._count.shoppingItems} {t("group.itemsAmount")}
+                {group.itemCount} {t("group.itemsAmount")}
               </span>
             </div>
             <div className="flex items-center gap-1">

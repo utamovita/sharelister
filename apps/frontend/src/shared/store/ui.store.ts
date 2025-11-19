@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import type { GroupWithDetails } from "@repo/types";
-import type { Group } from "@repo/database";
 
 export const DIALOG_TYPES = {
   MANAGE_MEMBERS: "manage-members",
@@ -19,8 +18,8 @@ type SheetType = (typeof SHEET_TYPES)[keyof typeof SHEET_TYPES];
 
 export type DialogPayload = {
   [DIALOG_TYPES.MANAGE_MEMBERS]: { group: GroupWithDetails };
-  [DIALOG_TYPES.RENAME_GROUP]: { group: Group };
-  [DIALOG_TYPES.DELETE_GROUP]: { group: Group };
+  [DIALOG_TYPES.RENAME_GROUP]: { group: GroupWithDetails };
+  [DIALOG_TYPES.DELETE_GROUP]: { group: GroupWithDetails };
   [DIALOG_TYPES.CREATE_GROUP]: Record<string, never>;
   [DIALOG_TYPES.DELETE_ACCOUNT]: Record<string, never>;
 };
