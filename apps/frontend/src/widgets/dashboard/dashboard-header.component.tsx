@@ -31,8 +31,8 @@ export function DashboardHeader() {
           </LoadingLink>
         )}
         <h1 className="text-2xl font-bold">
-          {isDashboardHome && profile?.name
-            ? `${greeting}, ${profile.name}!`
+          {isDashboardHome && profile?.data.name
+            ? `${greeting}, ${profile.data.name}!`
             : ""}
         </h1>
       </div>

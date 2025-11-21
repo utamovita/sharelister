@@ -9,7 +9,6 @@ describe('AccountService', () => {
   let service: AccountService;
   let prisma: PrismaService;
 
-  // Tworzymy atrapę PrismaService
   const mockPrismaService = {
     user: {
       update: jest.fn(),
@@ -20,7 +19,6 @@ describe('AccountService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AccountService,
-        // Dostarczamy mocka zamiast prawdziwego PrismaService
         {
           provide: PrismaService,
           useValue: mockPrismaService,
@@ -51,7 +49,7 @@ describe('AccountService', () => {
 
       mockPrismaService.user.update.mockResolvedValue(mockUpdatedUser);
 
-      const result = await service.updateProfile(userId, updateUserDto);
+      const result = await service.updateUsername(userId, updateUserDto);
 
       expect(prisma.user.update).toHaveBeenCalledWith({
         where: { id: userId },

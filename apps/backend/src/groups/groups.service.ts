@@ -109,6 +109,7 @@ export class GroupsService implements IGroupsService {
     });
 
     if (memberCount <= 1) {
+      // TODO: Remove group instead
       throw new ForbiddenException(
         'You cannot remove the last member of a group. Delete the group instead.',
       );

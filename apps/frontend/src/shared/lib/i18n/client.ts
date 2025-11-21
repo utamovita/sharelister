@@ -27,8 +27,8 @@ i18next
     fallbackLng: "en",
     load: "languageOnly",
     defaultNS: "common",
-    fallbackNS: ["validation", "common"],
-    ns: ["common", "validation"],
+    fallbackNS: ["validation", "common", "response"],
+    ns: ["common", "validation", "response"],
     detection: {
       order: ["localStorage", "navigator"],
       caches: ["localStorage"],

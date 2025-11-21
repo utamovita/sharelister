@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUserSchema, UpdateUserDto } from "@repo/schemas";
-import { useUpdateProfile } from "./use-update-profile.hook";
+import { useUpdateUsername } from "./use-update-username.hook";
 import {
   Form,
   FormControl,
@@ -20,12 +20,12 @@ import { trpc } from "@repo/trpc/react";
 export function UpdateProfileForm() {
   const { t } = useTranslation("common");
   const { data: profile } = trpc.account.getProfile.useQuery();
-  const { mutate: updateProfile, isPending } = useUpdateProfile();
+  const { mutate: updateProfile, isPending } = useUpdateUsername();
 
   const form = useForm<UpdateUserDto>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
-      username: profile?.name ?? "",
+      username: profile?.data.name ?? "",
     },
   });
 

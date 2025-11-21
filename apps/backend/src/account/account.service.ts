@@ -10,7 +10,7 @@ import { ChangeLangDto } from './dto';
 export class AccountService implements IAccountService {
   constructor(private prisma: PrismaService) {}
 
-  async updateProfile(userId: string, updateUserDto: UpdateUserDto) {
+  async updateUsername(userId: string, updateUserDto: UpdateUserDto) {
     return this.prisma.user.update({
       where: { id: userId },
       data: {

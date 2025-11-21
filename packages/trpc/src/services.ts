@@ -10,7 +10,7 @@ import type { Group, GroupMembership } from "@repo/database";
 import { UpdateMemberRoleDto } from "@repo/schemas/src";
 
 export interface IAccountService {
-  updateProfile(userId: string, updateUserDto: UpdateUserDto): Promise<User>;
+  updateUsername(userId: string, updateUserDto: UpdateUserDto): Promise<User>;
   deleteAccount(userId: string): Promise<void>;
   updateLanguage(userId: string, data: UpdateUserLanguageDto): Promise<User>;
 }

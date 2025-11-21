@@ -1,0 +1,8 @@
+{
+  "account": {
+    "profileFetched": "Profil fetched successfully.",
+    "usernameUpdated": "Username has been updated successfully.",
+    "deleted": "Account has been deleted successfully.",
+    "langUpdated": "Language has been updated successfully."
+  }
+}

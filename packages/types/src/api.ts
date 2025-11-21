@@ -1,5 +1,11 @@
 import type { User, Invitation as PrismaInvitation } from "@repo/database";
 
+export type TrpcSuccessResponse<T> = {
+  success: true;
+  data: T;
+  message: string;
+};
+
 export type SuccessResponse<T> = {
   success: true;
   data: T;

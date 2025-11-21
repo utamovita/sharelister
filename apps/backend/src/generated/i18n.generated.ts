@@ -162,6 +162,14 @@ export type I18nTranslations = {
             "salutation": string;
         };
     };
+    "response": {
+        "account": {
+            "profileFetched": string;
+            "usernameUpdated": string;
+            "deleted": string;
+            "langUpdated": string;
+        };
+    };
     "validation": {
         "required": string;
         "email": {

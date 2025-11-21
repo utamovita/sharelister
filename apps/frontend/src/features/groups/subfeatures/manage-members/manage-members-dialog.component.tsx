@@ -71,7 +71,7 @@ export function ManageMembersDialog({
                           role: newRole as Role,
                         })
                       }
-                      disabled={user.id === profile?.id || isUpdating}
+                      disabled={user.id === profile?.data.id || isUpdating}
                     >
                       <SelectTrigger className="w-[110px] h-8">
                         <SelectValue />
@@ -92,7 +92,7 @@ export function ManageMembersDialog({
                       onClick={() =>
                         removeMember({ groupId: group.id, memberId: user.id })
                       }
-                      disabled={user.id === profile?.id || isRemoving}
+                      disabled={user.id === profile?.data.id || isRemoving}
                     >
                       <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>

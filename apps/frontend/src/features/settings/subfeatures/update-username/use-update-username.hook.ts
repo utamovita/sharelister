@@ -1,15 +1,15 @@
-import { handleError } from "@/shared/lib/error/handle-error";
 import { toast } from "sonner";
-import { useUiStore } from "@/shared/store/ui.store";
 import { useTranslation } from "react-i18next";
+import { useUiStore } from "@/shared/store/ui.store";
+import { handleError } from "@/shared/lib/error/handle-error";
 import { trpc } from "@repo/trpc/react";
 
-export function useUpdateLanguage() {
+export function useUpdateUsername() {
   const { t } = useTranslation();
   const { closeSheet } = useUiStore();
   const utils = trpc.useUtils();
 
-  return trpc.account.updateLanguage.useMutation({
+  return trpc.account.updateProfile.useMutation({
     onSuccess: (response) => {
       utils.account.getProfile.invalidate();
       toast.success(t(response.message));

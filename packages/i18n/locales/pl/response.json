@@ -1,0 +1,8 @@
+{
+  "account": {
+    "profileFetched": "Profil został pomyślnie pobrany.",
+    "usernameUpdated": "Nazwa użytkownika została pomyślnie zaktualizowana.",
+    "deleted": "Konto zostało pomyślnie usunięte.",
+    "langUpdated": "Język został pomyślnie zaktualizowany."
+  }
+}
