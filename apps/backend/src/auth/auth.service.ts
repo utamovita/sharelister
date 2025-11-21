@@ -101,9 +101,9 @@ export class AuthService {
       );
     }
 
-    if (!user.emailVerified) {
-      throw new UnauthorizedException('error.emailNotVerified');
-    }
+    // if (!user.emailVerified) {
+    //   throw new UnauthorizedException('error.emailNotVerified');
+    // }
 
     if (!user.passwordHash) {
       throw new UnauthorizedException('credentials.invalid');

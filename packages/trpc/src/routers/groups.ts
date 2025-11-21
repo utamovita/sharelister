@@ -8,38 +8,86 @@ import {
 import { router } from "../trpc";
 import type { IGroupsService } from "../services";
 import { groupAdminProcedure, protectedProcedure } from "../procedures";
+import { GroupWithDetails, TrpcSuccessResponse } from "@repo/types";
 
 export const createGroupsRouter = (groupsService: IGroupsService) => {
   return router({
-    getAll: protectedProcedure.query(({ ctx }) => {
-      return groupsService.findAllForUser(ctx.user.id);
+    getAll: protectedProcedure.query(async ({ ctx }) => {
+      const groups = await groupsService.getGroups(ctx.user.id);
+      const response: TrpcSuccessResponse<GroupWithDetails[]> = {
+        success: true,
+        data: groups,
+        message: "response:groups.groupsFetched",
+      };
+
+      return response;
     }),
     create: protectedProcedure
       .input(createGroupSchema)
-      .mutation(({ ctx, input }) => {
-        return groupsService.create(input, ctx.user.id);
+      .mutation(async ({ ctx, input }) => {
+        await groupsService.create(input, ctx.user.id);
+
+        const response: TrpcSuccessResponse<null> = {
+          success: true,
+          data: null,
+          message: "response:groups.created",
+        };
+
+        return response;
       }),
-    update: groupAdminProcedure
+    updateName: groupAdminProcedure
       .input(updateGroupInputSchema)
-      .mutation(({ input }) => {
-        return groupsService.update(input.groupId, input.data);
+      .mutation(async ({ input }) => {
+        await groupsService.updateName(input.groupId, input.data);
+
+        const response: TrpcSuccessResponse<null> = {
+          success: true,
+          data: null,
+          message: "response:groups.updatedName",
+        };
+
+        return response;
       }),
     delete: groupAdminProcedure
       .input(groupParamsSchema)
-      .mutation(({ input }) => {
-        return groupsService.remove(input.groupId);
+      .mutation(async ({ input }) => {
+        await groupsService.remove(input.groupId);
+
+        const response: TrpcSuccessResponse<null> = {
+          success: true,
+          data: null,
+          message: "response:groups.deleted",
+        };
+
+        return response;
       }),
     removeMember: groupAdminProcedure
       .input(memberParamsSchema)
-      .mutation(({ input }) => {
-        return groupsService.removeMember(input.groupId, input.memberId);
+      .mutation(async ({ input }) => {
+        await groupsService.removeMember(input.groupId, input.memberId);
+
+        const response: TrpcSuccessResponse<null> = {
+          success: true,
+          data: null,
+          message: "response:groups.memberRemoved",
+        };
+
+        return response;
       }),
     updateMemberRole: groupAdminProcedure
       .input(updateMemberRoleInputSchema)
-      .mutation(({ input }) => {
-        return groupsService.updateMemberRole(input.groupId, input.memberId, {
+      .mutation(async ({ input }) => {
+        await groupsService.updateMemberRole(input.groupId, input.memberId, {
           role: input.role,
         });
+
+        const response: TrpcSuccessResponse<null> = {
+          success: true,
+          data: null,
+          message: "response:groups.memberRoleUpdated",
+        };
+
+        return response;
       }),
   });
 };

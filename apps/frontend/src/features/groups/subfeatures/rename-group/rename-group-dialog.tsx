@@ -38,19 +38,13 @@ export function RenameGroupDialog({
 }: RenameGroupDialogProps) {
   const { mutate, isPending } = useRenameGroup();
   const { t } = useTranslation("common");
-  const { closeDialog } = useUiStore();
 
   const form = useForm<FormValues>({
     defaultValues: { name: group.name },
   });
 
   const onSubmit = (data: FormValues) => {
-    mutate(
-      { groupId: group.id, data },
-      {
-        onSuccess: () => closeDialog(),
-      },
-    );
+    mutate({ groupId: group.id, data });
   };
 
   return (

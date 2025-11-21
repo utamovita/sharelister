@@ -1,23 +1,19 @@
 "use client";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { groupsApi } from "../../api/groups.api";
 import { useTranslation } from "react-i18next";
 import { handleError } from "@/shared/lib/error/handle-error";
+import { trpc } from "@repo/trpc/react";
 
 export function useCreateGroup() {
-  const queryClient = useQueryClient();
   const { t } = useTranslation(["common"]);
+  const utils = trpc.useUtils();
 
-  return useMutation({
-    mutationFn: groupsApi.create,
+  return trpc.groups.create.useMutation({
     onSuccess: (response) => {
-      if (response.message) {
-        toast.success(t(response.message));
-      }
-      queryClient.invalidateQueries({ queryKey: ["groups"] });
+      utils.groups.getAll.invalidate();
+      toast.success(t(response.message));
     },
     onError: (error) => {
       handleError({ error });

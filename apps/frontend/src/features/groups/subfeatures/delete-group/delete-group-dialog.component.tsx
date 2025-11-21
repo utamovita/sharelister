@@ -36,7 +36,7 @@ export function DeleteGroupDialog({
         <div className="flex justify-end gap-2 mt-4">
           <Button
             variant="destructive"
-            onClick={() => mutate(group.id)}
+            onClick={() => mutate({ groupId: group.id })}
             isLoading={isPending}
           >
             {t("yesDelete")}

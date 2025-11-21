@@ -1,10 +1,8 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { UpdateUserDto } from '@repo/schemas';
+import { UpdateUserDto, UpdateUserLanguageDto } from '@repo/schemas';
 import type { IAccountService } from '@repo/trpc/services';
 import { ROLES } from '@repo/types';
 import { PrismaService } from 'src/prisma/prisma.service';
-
-import { ChangeLangDto } from './dto';
 
 @Injectable()
 export class AccountService implements IAccountService {
@@ -82,7 +80,7 @@ export class AccountService implements IAccountService {
     }
   }
 
-  async updateLanguage(userId: string, data: ChangeLangDto) {
+  async updateLanguage(userId: string, data: UpdateUserLanguageDto) {
     return this.prisma.user.update({
       where: { id: userId },
       data: {

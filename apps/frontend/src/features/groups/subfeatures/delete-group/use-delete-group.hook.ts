@@ -4,23 +4,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { handleError } from "@/shared/lib/error/handle-error";
-import { groupsApi } from "@/features/groups/api/groups.api";
 import { useUiStore } from "@/shared/store/ui.store";
+import { trpc } from "@repo/trpc/react";
 
 export function useDeleteGroup() {
-  const queryClient = useQueryClient();
   const { t } = useTranslation(["common"]);
   const { closeDialog } = useUiStore();
+  const utils = trpc.useUtils();
 
-  return useMutation({
-    mutationFn: (groupId: string) => groupsApi.remove(groupId),
+  return trpc.groups.delete.useMutation({
     onSuccess: (response) => {
-      if (response?.message) {
-        toast.success(t(response.message));
-      } else {
-        toast.success(t("group.deleteSuccess"));
-      }
-      queryClient.invalidateQueries({ queryKey: ["groups"] });
+      utils.groups.getAll.invalidate();
+      toast.success(t(response.message));
       closeDialog();
     },
     onError: (error) => {

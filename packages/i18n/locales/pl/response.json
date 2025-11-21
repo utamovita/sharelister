@@ -1,8 +1,14 @@
 {
   "account": {
-    "profileFetched": "Profil został pomyślnie pobrany.",
     "usernameUpdated": "Nazwa użytkownika została pomyślnie zaktualizowana.",
     "deleted": "Konto zostało pomyślnie usunięte.",
     "langUpdated": "Język został pomyślnie zaktualizowany."
+  },
+  "groups": {
+    "created": "Grupa została pomyślnie utworzona.",
+    "updatedName": "Nazwa grupy została pomyślnie zaktualizowana.",
+    "deleted": "Grupa została pomyślnie usunięta.",
+    "memberRemoved": "Członek został pomyślnie usunięty z grupy.",
+    "memberRoleUpdated": "Rola członka grupy została pomyślnie zaktualizowana."
   }
 }

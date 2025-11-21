@@ -164,10 +164,16 @@ export type I18nTranslations = {
     };
     "response": {
         "account": {
-            "profileFetched": string;
             "usernameUpdated": string;
             "deleted": string;
             "langUpdated": string;
+        };
+        "groups": {
+            "created": string;
+            "updatedName": string;
+            "deleted": string;
+            "memberRemoved": string;
+            "memberRoleUpdated": string;
         };
     };
     "validation": {

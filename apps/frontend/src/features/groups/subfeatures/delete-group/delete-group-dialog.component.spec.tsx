@@ -2,7 +2,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { useDeleteGroup } from "./use-delete-group.hook";
-import type { Group } from "@repo/database";
 import { DIALOG_TYPES, useUiStore } from "@/shared/store/ui.store";
 import { DialogManager } from "@/widgets/dialog-manager";
 import { GroupWithDetails } from "@repo/types";
@@ -80,7 +79,7 @@ describe("DeleteGroupDialog", () => {
     );
 
     await waitFor(() => {
-      expect(mockMutate).toHaveBeenCalledWith("group-123");
+      expect(mockMutate).toHaveBeenCalledWith({ groupId: "group-123" });
     });
   });
 
@@ -109,7 +108,6 @@ describe("DeleteGroupDialog", () => {
       screen.getByRole("button", { name: "Open Delete Dialog" }),
     );
 
-    // Dialog ma atrybut `role="dialog"`
     const dialog = await screen.findByRole("dialog");
     const results = await axe(dialog);
 

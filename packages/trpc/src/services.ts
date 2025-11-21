@@ -16,9 +16,9 @@ export interface IAccountService {
 }
 
 export interface IGroupsService {
-  findAllForUser(userId: string): Promise<GroupWithDetails[]>;
+  getGroups(userId: string): Promise<GroupWithDetails[]>;
   create(createGroupDto: CreateGroupDto, userId: string): Promise<Group>;
-  update(groupId: string, updateGroupDto: UpdateGroupDto): Promise<Group>;
+  updateName(groupId: string, updateGroupDto: UpdateGroupDto): Promise<Group>;
   remove(groupId: string): Promise<void>;
   removeMember(groupId: string, memberId: string): Promise<void>;
   updateMemberRole(

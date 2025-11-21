@@ -1,26 +1,21 @@
 "use client";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { handleError } from "@/shared/lib/error/handle-error";
-import { groupsApi } from "@/features/groups/api/groups.api";
-import { UpdateGroupDto } from "@repo/schemas";
-
-type UpdateGroupData = {
-  groupId: string;
-  data: UpdateGroupDto;
-};
+import { trpc } from "@repo/trpc/react";
+import { useUiStore } from "@/shared/store/ui.store";
 
 export function useRenameGroup() {
-  const queryClient = useQueryClient();
-  const { t } = useTranslation(["common"]);
+  const { t } = useTranslation();
+  const { closeDialog } = useUiStore();
+  const utils = trpc.useUtils();
 
-  return useMutation({
-    mutationFn: (updateData: UpdateGroupData) => groupsApi.update(updateData),
-    onSuccess: () => {
-      toast.success(t("group.changeNameDialog.success"));
-      queryClient.invalidateQueries({ queryKey: ["groups"] });
+  return trpc.groups.updateName.useMutation({
+    onSuccess: (response) => {
+      utils.groups.getAll.invalidate();
+      toast.success(t(response.message));
+      closeDialog();
     },
     onError: (error) => {
       handleError({ error });

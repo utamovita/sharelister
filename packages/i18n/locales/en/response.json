@@ -1,8 +1,14 @@
 {
   "account": {
-    "profileFetched": "Profil fetched successfully.",
     "usernameUpdated": "Username has been updated successfully.",
     "deleted": "Account has been deleted successfully.",
     "langUpdated": "Language has been updated successfully."
+  },
+  "groups": {
+    "created": "Group created successfully.",
+    "updatedName": "Group name has been updated successfully.",
+    "deleted": "Group deleted successfully.",
+    "memberRemoved": "Member has been removed successfully.",
+    "memberRoleUpdated": "Role has been updated successfully."
   }
 }
