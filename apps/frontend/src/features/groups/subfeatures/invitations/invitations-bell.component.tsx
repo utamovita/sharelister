@@ -51,7 +51,7 @@ export function InvitationsBell() {
                   <div className="flex gap-2 mt-2">
                     <Button
                       size="sm"
-                      onClick={() => accept(inv.id)}
+                      onClick={() => accept({ invitationId: inv.id })}
                       disabled={isAccepting || isDeclining}
                     >
                       {t("accept")}
@@ -59,7 +59,7 @@ export function InvitationsBell() {
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => decline(inv.id)}
+                      onClick={() => decline({ invitationId: inv.id })}
                       disabled={isAccepting || isDeclining}
                     >
                       {t("decline")}

@@ -10,5 +10,10 @@
     "deleted": "Group deleted successfully.",
     "memberRemoved": "Member has been removed successfully.",
     "memberRoleUpdated": "Role has been updated successfully."
+  },
+  "invitation": {
+    "sent": "Invitation sent successfully.",
+    "accepted": "Successfully joined the group.",
+    "declined": "Invitation declined."
   }
 }

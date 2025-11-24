@@ -1,20 +1,16 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { handleError } from "@/shared/lib/error/handle-error";
-import { invitationsApi } from "@/features/groups/api/invitations.api";
-import { CreateInvitationDto } from "@repo/schemas";
+import { trpc } from "@repo/trpc/react";
 
-export function useCreateInvitation(groupId: string) {
-  const { t } = useTranslation(["common"]);
+export function useCreateInvitation() {
+  const { t } = useTranslation();
 
-  return useMutation({
-    mutationFn: (data: CreateInvitationDto) =>
-      invitationsApi.send({ groupId, data }),
-    onSuccess: () => {
-      toast.success(t("invitation.sentMsg"));
+  return trpc.invitations.create.useMutation({
+    onSuccess: (response) => {
+      toast.success(t(response.message));
     },
     onError: (error) => {
       handleError({ error });

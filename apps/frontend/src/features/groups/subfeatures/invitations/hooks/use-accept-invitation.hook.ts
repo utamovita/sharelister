@@ -1,19 +1,18 @@
 "use client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { handleError } from "@/shared/lib/error/handle-error";
-import { invitationsApi } from "@/features/groups/api/invitations.api";
 import { useTranslation } from "react-i18next";
+import { trpc } from "@repo/trpc/react";
 
 export function useAcceptInvitation() {
-  const { t } = useTranslation("common");
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: invitationsApi.accept,
-    onSuccess: () => {
-      toast.success(t("invitation.joinedMsg"));
-      queryClient.invalidateQueries({ queryKey: ["invitations", "received"] });
-      queryClient.invalidateQueries({ queryKey: ["groups"] });
+  const { t } = useTranslation();
+  const utils = trpc.useUtils();
+
+  return trpc.invitations.accept.useMutation({
+    onSuccess: (response) => {
+      toast.success(t(response.message));
+      utils.invitations.getReceived.invalidate();
+      utils.groups.getAll.invalidate();
     },
     onError: (error) => handleError({ error }),
   });

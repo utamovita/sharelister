@@ -5,16 +5,24 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ROLES } from '@repo/types';
+import { CreateInvitationDto } from '@repo/schemas';
+import { IInvitationsService } from '@repo/trpc/services';
+import { Invitation, ROLES } from '@repo/types';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class InvitationsService {
+export class InvitationsService implements IInvitationsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(groupId: string, invitingUserId: string, invitedEmail: string) {
+  async create(
+    groupId: string,
+    invitingUserId: string,
+    createInvitationDto: CreateInvitationDto,
+  ): Promise<Invitation> {
+    const { email } = createInvitationDto;
+
     const invitedUser = await this.prisma.user.findUnique({
-      where: { email: invitedEmail },
+      where: { email },
     });
 
     if (!invitedUser) {
@@ -36,7 +44,7 @@ export class InvitationsService {
     }
 
     const existingInvitation = await this.prisma.invitation.findFirst({
-      where: { groupId, email: invitedEmail },
+      where: { groupId, email },
     });
 
     if (existingInvitation) {
@@ -47,28 +55,22 @@ export class InvitationsService {
 
     return this.prisma.invitation.create({
       data: {
-        email: invitedEmail,
+        email,
         groupId,
         invitedByUserId: invitingUserId,
       },
       include: {
         group: {
-          select: {
-            id: true,
-            name: true,
-          },
+          select: { id: true, name: true },
         },
         invitedByUser: {
-          select: {
-            id: true,
-            name: true,
-          },
+          select: { id: true, name: true },
         },
       },
     });
   }
 
-  async findAllReceivedForUser(userId: string) {
+  async findAllReceivedForUser(userId: string): Promise<Invitation[]> {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
 
     if (!user) {
@@ -81,25 +83,22 @@ export class InvitationsService {
       },
       include: {
         group: {
-          select: {
-            id: true,
-            name: true,
-          },
+          select: { id: true, name: true },
         },
         invitedByUser: {
-          select: {
-            id: true,
-            name: true,
-          },
+          select: { id: true, name: true },
         },
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     });
   }
 
-  async accept(invitationId: string, userId: string) {
+  async accept(invitationId: string, userId: string): Promise<void> {
     const invitation = await this.findAndVerifyInvitation(invitationId, userId);
 
-    return this.prisma.$transaction(async (tx) => {
+    await this.prisma.$transaction(async (tx) => {
       await tx.groupMembership.create({
         data: {
           userId: userId,
@@ -114,7 +113,7 @@ export class InvitationsService {
     });
   }
 
-  async decline(invitationId: string, userId: string) {
+  async decline(invitationId: string, userId: string): Promise<void> {
     await this.findAndVerifyInvitation(invitationId, userId);
     await this.prisma.invitation.delete({ where: { id: invitationId } });
   }

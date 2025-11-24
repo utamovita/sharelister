@@ -1,19 +1,17 @@
 "use client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { handleError } from "@/shared/lib/error/handle-error";
-import { invitationsApi } from "@/features/groups/api/invitations.api";
 import { useTranslation } from "react-i18next";
+import { trpc } from "@repo/trpc/react";
 
 export function useDeclineInvitation() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
+  const utils = trpc.useUtils();
 
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: invitationsApi.decline,
-    onSuccess: () => {
-      toast.info(t("invitation.declinedMsg"));
-      queryClient.invalidateQueries({ queryKey: ["invitations", "received"] });
+  return trpc.invitations.decline.useMutation({
+    onSuccess: (response) => {
+      toast.info(t(response.message));
+      utils.invitations.getReceived.invalidate();
     },
     onError: (error) => handleError({ error }),
   });

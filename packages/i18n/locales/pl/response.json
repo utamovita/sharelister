@@ -10,5 +10,10 @@
     "deleted": "Grupa została pomyślnie usunięta.",
     "memberRemoved": "Członek został pomyślnie usunięty z grupy.",
     "memberRoleUpdated": "Rola członka grupy została pomyślnie zaktualizowana."
+  },
+  "invitation": {
+    "sent": "Zaproszenie zostało wysłane.",
+    "accepted": "Pomyślnie dołączyłeś do grupy.",
+    "declined": "Zaproszenie zostało odrzucone."
   }
 }

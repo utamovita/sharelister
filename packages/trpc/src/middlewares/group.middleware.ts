@@ -1,13 +1,9 @@
 import { TRPCError } from "@trpc/server";
 import { ROLES } from "@repo/types";
-import { z } from "zod";
 import { middleware } from "../trpc";
+import { groupParamsSchema } from "@repo/schemas";
 
-const groupInputSchema = z
-  .object({
-    groupId: z.string().min(1),
-  })
-  .passthrough();
+const groupInputSchema = groupParamsSchema.loose();
 
 export const groupMemberMiddleware = middleware(
   async ({ ctx, next, getRawInput }) => {
@@ -49,6 +45,7 @@ export const groupMemberMiddleware = middleware(
     return next({
       ctx: {
         ...ctx,
+        user: ctx.user,
         membership,
       },
     });

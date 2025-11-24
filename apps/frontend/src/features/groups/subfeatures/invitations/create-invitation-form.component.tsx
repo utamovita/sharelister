@@ -23,7 +23,7 @@ type CreateInvitationFormProps = {
 
 export function CreateInvitationForm({ groupId }: CreateInvitationFormProps) {
   const { t } = useTranslation("common");
-  const { mutate, isPending } = useCreateInvitation(groupId);
+  const { mutate, isPending } = useCreateInvitation();
   const { closeDialog } = useUiStore();
 
   const form = useForm<CreateInvitationDto>({
@@ -32,12 +32,15 @@ export function CreateInvitationForm({ groupId }: CreateInvitationFormProps) {
   });
 
   const onSubmit = (data: CreateInvitationDto) => {
-    mutate(data, {
-      onSuccess: () => {
-        form.reset();
-        closeDialog();
+    mutate(
+      { groupId, ...data },
+      {
+        onSuccess: () => {
+          form.reset();
+          closeDialog();
+        },
       },
-    });
+    );
   };
 
   return (

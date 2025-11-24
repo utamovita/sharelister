@@ -4,6 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { AccountModule } from '../account/account.module';
 import { GroupsModule } from '../groups/groups.module';
+import { InvitationsModule } from '../invitations/invitations.module';
 import { PrismaModule } from '../prisma/prisma.module';
 import { TrpcController } from './trpc.controller';
 import { TrpcRouter } from './trpc.router';
@@ -14,6 +15,7 @@ import { TrpcService } from './trpc.service';
     PrismaModule,
     AccountModule,
     GroupsModule,
+    InvitationsModule,
     JwtModule.register({}),
     ConfigModule,
   ],

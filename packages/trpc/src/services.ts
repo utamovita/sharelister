@@ -1,13 +1,14 @@
 import type { User } from "@repo/database";
 import type {
   CreateGroupDto,
+  CreateInvitationDto,
   UpdateGroupDto,
   UpdateUserDto,
   UpdateUserLanguageDto,
 } from "@repo/schemas";
-import type { GroupWithDetails } from "@repo/types";
+import type { GroupWithDetails, Invitation } from "@repo/types";
 import type { Group, GroupMembership } from "@repo/database";
-import { UpdateMemberRoleDto } from "@repo/schemas/src";
+import { UpdateMemberRoleDto } from "@repo/schemas";
 
 export interface IAccountService {
   updateUsername(userId: string, updateUserDto: UpdateUserDto): Promise<User>;
@@ -26,4 +27,15 @@ export interface IGroupsService {
     memberId: string,
     updateDto: UpdateMemberRoleDto,
   ): Promise<GroupMembership>;
+}
+
+export interface IInvitationsService {
+  create(
+    groupId: string,
+    invitingUserId: string,
+    createInvitationDto: CreateInvitationDto,
+  ): Promise<Invitation>;
+  findAllReceivedForUser(userId: string): Promise<Invitation[]>;
+  accept(invitationId: string, userId: string): Promise<void>;
+  decline(invitationId: string, userId: string): Promise<void>;
 }

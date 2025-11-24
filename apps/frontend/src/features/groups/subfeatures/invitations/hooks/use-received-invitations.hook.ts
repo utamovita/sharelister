@@ -1,13 +1,6 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
-import { useAuthStore } from "@/shared/store/auth.store";
-import { invitationsApi } from "@/features/groups/api/invitations.api";
+import { trpc } from "@repo/trpc/react";
 
 export function useReceivedInvitations() {
-  const token = useAuthStore((state) => state.accessToken);
-  return useQuery({
-    queryKey: ["invitations", "received", token],
-    queryFn: invitationsApi.getReceived,
-    enabled: !!token,
-  });
+  return trpc.invitations.getReceived.useQuery();
 }
