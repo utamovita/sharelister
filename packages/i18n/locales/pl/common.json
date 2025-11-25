@@ -28,12 +28,7 @@
     "resetPassword": "Zresetuj hasło",
     "resetPasswordTitle": "Ustaw nowe hasło",
     "resetPasswordDescription": "Wprowadź swoje nowe hasło poniżej.",
-    "saveNewPassword": "Zapisz nowe hasło",
-    "error": {
-      "providerMismatchTitle": "Błąd logowania",
-      "providerMismatchDescription": "Konto z tym adresem e-mail już istnieje, ale zostało utworzone za pomocą hasła. Zaloguj się, używając swojego hasła.",
-      "wrongProvider": "To konto jest zarejestrowane przez {{provider}}. Proszę zalogować się za pomocą tej metody."
-    }
+    "saveNewPassword": "Zapisz nowe hasło"
   },
   "formFields": {
     "email": "Email",
@@ -60,7 +55,7 @@
     "deleteGroupPrompt": "Czy na pewno chcesz usunąć grupę {{groupName}}? Tej akcji nie można cofnąć.",
     "changeNameDialog": {
       "title": "Zmień nazwę grupy",
-      "description:": "Wprowadź nową nazwę dla swojej listy zakupów.",
+      "description": "Wprowadź nową nazwę dla swojej listy zakupów.",
       "newName": "Nowa nazwa",
       "newNamePlaceholder": "Np. Zakupy na weekend",
       "save": "Zapisz zmiany"

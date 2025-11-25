@@ -11,7 +11,6 @@ import { Input } from "@/shared/ui/input";
 import { useForm } from "react-hook-form";
 import { useRenameGroup } from "@/features/groups/subfeatures/rename-group/use-rename-group.hook";
 import { useTranslation } from "react-i18next";
-import { useUiStore } from "@/shared/store/ui.store";
 import {
   Dialog,
   DialogContent,
@@ -20,6 +19,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { GroupWithDetails } from "@repo/types";
+import { UpdateGroupDto } from "@repo/schemas";
 
 type RenameGroupDialogProps = {
   group: GroupWithDetails;
@@ -27,24 +27,16 @@ type RenameGroupDialogProps = {
   onOpenChange: (open: boolean) => void;
 };
 
-type FormValues = {
-  name: string;
-};
-
 export function RenameGroupDialog({
   group,
   open,
   onOpenChange,
 }: RenameGroupDialogProps) {
-  const { mutate, isPending } = useRenameGroup();
+  const { renameGroupMutation, form } = useRenameGroup();
   const { t } = useTranslation("common");
 
-  const form = useForm<FormValues>({
-    defaultValues: { name: group.name },
-  });
-
-  const onSubmit = (data: FormValues) => {
-    mutate({ groupId: group.id, data });
+  const onSubmit = (data: UpdateGroupDto) => {
+    renameGroupMutation.mutate({ groupId: group.id, data });
   };
 
   return (
@@ -76,7 +68,11 @@ export function RenameGroupDialog({
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" isLoading={isPending}>
+            <Button
+              type="submit"
+              className="w-full"
+              isLoading={renameGroupMutation.isPending}
+            >
               {t("group.changeNameDialog.save")}
             </Button>
           </form>

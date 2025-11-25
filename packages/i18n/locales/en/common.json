@@ -28,12 +28,7 @@
     "resetPassword": "Reset Password",
     "resetPasswordTitle": "Set a new password",
     "resetPasswordDescription": "Please enter your new password below.",
-    "saveNewPassword": "Save new password",
-    "error": {
-      "providerMismatchTitle": "Login Error",
-      "providerMismatchDescription": "An account with this email already exists but was created with a password. Please log in using your password.",
-      "wrongProvider": "This account is registered via {{provider}}. Please log in using that method."
-    }
+    "saveNewPassword": "Save new password"
   },
   "formFields": {
     "email": "Email",

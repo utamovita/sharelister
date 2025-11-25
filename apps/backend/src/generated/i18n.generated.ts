@@ -35,11 +35,6 @@ export type I18nTranslations = {
             "resetPasswordTitle": string;
             "resetPasswordDescription": string;
             "saveNewPassword": string;
-            "error": {
-                "providerMismatchTitle": string;
-                "providerMismatchDescription": string;
-                "wrongProvider": string;
-            };
         };
         "formFields": {
             "email": string;
@@ -70,6 +65,7 @@ export type I18nTranslations = {
                 "newName": string;
                 "newNamePlaceholder": string;
                 "save": string;
+                "description": string;
             };
             "manageMembers": {
                 "title": string;

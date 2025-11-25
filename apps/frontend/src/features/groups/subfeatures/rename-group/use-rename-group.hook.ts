@@ -5,20 +5,36 @@ import { useTranslation } from "react-i18next";
 import { handleError } from "@/shared/lib/error/handle-error";
 import { trpc } from "@repo/trpc/react";
 import { useUiStore } from "@/shared/store/ui.store";
+import { useForm } from "react-hook-form";
+import { UpdateGroupDto, updateGroupSchema } from "@repo/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function useRenameGroup() {
   const { t } = useTranslation();
   const { closeDialog } = useUiStore();
   const utils = trpc.useUtils();
 
-  return trpc.groups.updateName.useMutation({
+  const form = useForm<UpdateGroupDto>({
+    resolver: zodResolver(updateGroupSchema),
+    defaultValues: {
+      name: "",
+    },
+  });
+
+  const renameGroupMutation = trpc.groups.updateName.useMutation({
     onSuccess: (response) => {
       utils.groups.getAll.invalidate();
       toast.success(t(response.message));
       closeDialog();
+      form.reset();
     },
     onError: (error) => {
       handleError({ error });
     },
   });
+
+  return {
+    renameGroupMutation,
+    form,
+  };
 }
