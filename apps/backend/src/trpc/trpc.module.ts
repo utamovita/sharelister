@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 
 import { AccountModule } from '../account/account.module';
+import { AuthModule } from '../auth/auth.module';
 import { GroupsModule } from '../groups/groups.module';
 import { InvitationsModule } from '../invitations/invitations.module';
 import { PrismaModule } from '../prisma/prisma.module';
@@ -18,6 +19,7 @@ import { TrpcService } from './trpc.service';
     GroupsModule,
     InvitationsModule,
     ShoppingListModule,
+    AuthModule,
     JwtModule.register({}),
     ConfigModule,
   ],

@@ -10,9 +10,26 @@ import type {
   ShoppingListItem,
   RemoveShoppingListItemsDto,
   ReorderShoppingListDto,
+  AuthResponseType,
+  LoginDto,
+  RegisterDto,
 } from "@repo/schemas";
 import type { GroupWithDetails, Invitation } from "@repo/types";
 import type { User, Group, GroupMembership } from "@repo/database";
+
+export interface IAuthService {
+  login(dto: LoginDto): Promise<AuthResponseType>;
+  register(dto: RegisterDto): Promise<{ message: string }>;
+  logout(userId: string): Promise<void>;
+  refreshToken(userId: string, refreshToken: string): Promise<AuthResponseType>;
+  verifyEmail(token: string): Promise<AuthResponseType>;
+  sendPasswordResetLink(email: string): Promise<void>;
+  resetPassword(token: string, newPassword: string): Promise<void>;
+  googleLogin(user: {
+    email: string;
+    firstName?: string;
+  }): Promise<AuthResponseType>;
+}
 
 export interface IAccountService {
   updateUsername(userId: string, updateUserDto: UpdateUserDto): Promise<User>;

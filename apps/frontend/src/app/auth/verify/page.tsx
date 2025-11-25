@@ -1,41 +1,54 @@
 "use client";
+
 import { useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
-import { authApi } from "@/features/auth/api/auth.api";
 import { useAuthStore } from "@/shared/store/auth.store";
 import { APP_PATHS } from "@repo/config";
 import { toast } from "sonner";
 import { SpinnerOverlay } from "@/shared/ui/spinner";
+import { trpc } from "@repo/trpc/react";
+import { useTranslation } from "react-i18next";
 
 function VerifyEmail() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const setTokens = useAuthStore((state) => state.setTokens);
   const token = searchParams.get("token");
+  const { t } = useTranslation("validation");
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: (token: string) => authApi.verifyEmail(token),
-    onSuccess: (response) => {
-      setTokens(response.data.data);
-      toast.success("TODO: E-mail zweryfikowany! Zalogowano.");
-      router.replace(APP_PATHS.dashboard);
+  const { data, error, isLoading } = trpc.auth.verifyEmail.useQuery(
+    { token: token! },
+    {
+      enabled: !!token,
+      retry: false,
+      staleTime: Infinity,
     },
-    onError: () => {
-      toast.error("TODO: Błąd weryfikacji. Spróbuj ponownie.");
-      router.replace(APP_PATHS.login);
-    },
-  });
+  );
 
   useEffect(() => {
-    if (token) {
-      mutate(token);
-    } else {
+    if (!token) {
+      router.replace(APP_PATHS.login);
+      return;
+    }
+
+    if (data?.success) {
+      const { accessToken, refreshToken } = data.data;
+      setTokens({ accessToken, refreshToken });
+      toast.success(t("success.emailVerified"));
+      router.replace(APP_PATHS.dashboard);
+    }
+
+    if (error) {
+      const message = error.message || t("error.invalidVerificationToken");
+      toast.error(t(message));
       router.replace(APP_PATHS.login);
     }
-  }, [token, mutate, router]);
+  }, [token, data, error, router, setTokens, t]);
 
-  if (isPending) return <SpinnerOverlay variant="page" />;
+  if (token && isLoading) {
+    return <SpinnerOverlay variant="page" />;
+  }
+
   return null;
 }
 

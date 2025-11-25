@@ -5,15 +5,13 @@ export const authResponseSchema = z.object({
   refreshToken: z.string(),
 });
 
-export type AuthResponseType = z.infer<typeof authResponseSchema>;
-
 export const loginSchema = z.object({
-  email: z.string().email({ message: "validation:email.invalid" }),
+  email: z.email({ message: "validation:email.invalid" }),
   password: z.string().min(1, { message: "validation:password.required" }),
 });
 
 export const registerSchema = loginSchema.extend({
-  email: z.string().email({ message: "validation:email.invalid" }),
+  email: z.email({ message: "validation:email.invalid" }),
   username: z.string().min(3, {
     message: JSON.stringify({
       key: "validation:name.minLength",
@@ -27,9 +25,6 @@ export const registerSchema = loginSchema.extend({
     }),
   }),
 });
-
-export type LoginDto = z.infer<typeof loginSchema>;
-export type RegisterDto = z.infer<typeof registerSchema>;
 
 export const forgotPasswordSchema = z.object({
   email: z.email({ message: "validation:email.invalid" }),
@@ -45,5 +40,8 @@ export const resetPasswordSchema = z.object({
   }),
 });
 
+export type AuthResponseType = z.infer<typeof authResponseSchema>;
+export type LoginDto = z.infer<typeof loginSchema>;
+export type RegisterDto = z.infer<typeof registerSchema>;
 export type ForgotPasswordDto = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordDto = z.infer<typeof resetPasswordSchema>;

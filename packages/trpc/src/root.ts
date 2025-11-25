@@ -3,6 +3,7 @@ import { publicProcedure, router } from "./trpc";
 
 import type {
   IAccountService,
+  IAuthService,
   IGroupsService,
   IInvitationsService,
   IShoppingListService,
@@ -10,8 +11,10 @@ import type {
 import { createGroupsRouter } from "./routers/groups";
 import { createInvitationsRouter } from "./routers/invitations";
 import { createShoppingListRouter } from "./routers/shopping-list";
+import { createAuthRouter } from "./routers/auth";
 
 export const createAppRouter = (services: {
+  authService: IAuthService;
   accountService: IAccountService;
   groupsService: IGroupsService;
   invitationsService: IInvitationsService;
@@ -19,6 +22,7 @@ export const createAppRouter = (services: {
 }) => {
   return router({
     healthcheck: publicProcedure.query(() => "yay!"),
+    auth: createAuthRouter(services.authService),
     account: createAccountRouter(services.accountService),
     groups: createGroupsRouter(services.groupsService),
     invitations: createInvitationsRouter(services.invitationsService),
