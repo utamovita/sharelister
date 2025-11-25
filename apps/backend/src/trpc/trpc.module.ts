@@ -6,6 +6,7 @@ import { AccountModule } from '../account/account.module';
 import { GroupsModule } from '../groups/groups.module';
 import { InvitationsModule } from '../invitations/invitations.module';
 import { PrismaModule } from '../prisma/prisma.module';
+import { ShoppingListModule } from '../shopping-list/shopping-list.module';
 import { TrpcController } from './trpc.controller';
 import { TrpcRouter } from './trpc.router';
 import { TrpcService } from './trpc.service';
@@ -16,6 +17,7 @@ import { TrpcService } from './trpc.service';
     AccountModule,
     GroupsModule,
     InvitationsModule,
+    ShoppingListModule,
     JwtModule.register({}),
     ConfigModule,
   ],

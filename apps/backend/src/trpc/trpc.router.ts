@@ -2,6 +2,7 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { type AppRouter, createAppRouter } from '@repo/trpc';
 import { AccountService } from 'src/account/account.service';
 import { InvitationsService } from 'src/invitations/invitations.service'; // <-- Import
+import { ShoppingListService } from 'src/shopping-list/shopping-list.service';
 
 import { GroupsService } from '../groups/groups.service';
 
@@ -13,6 +14,7 @@ export class TrpcRouter implements OnModuleInit {
     private readonly accountService: AccountService,
     private readonly groupsService: GroupsService,
     private readonly invitationsService: InvitationsService,
+    private readonly shoppingListService: ShoppingListService,
   ) {}
 
   onModuleInit() {
@@ -20,6 +22,7 @@ export class TrpcRouter implements OnModuleInit {
       accountService: this.accountService,
       groupsService: this.groupsService,
       invitationsService: this.invitationsService,
+      shoppingListService: this.shoppingListService,
     });
   }
 }

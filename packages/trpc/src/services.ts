@@ -1,14 +1,18 @@
-import type { User } from "@repo/database";
 import type {
   CreateGroupDto,
   CreateInvitationDto,
   UpdateGroupDto,
   UpdateUserDto,
   UpdateUserLanguageDto,
+  UpdateMemberRoleDto,
+  CreateShoppingListItemDto,
+  UpdateShoppingListItemDto,
+  ShoppingListItem,
+  RemoveShoppingListItemsDto,
+  ReorderShoppingListDto,
 } from "@repo/schemas";
 import type { GroupWithDetails, Invitation } from "@repo/types";
-import type { Group, GroupMembership } from "@repo/database";
-import { UpdateMemberRoleDto } from "@repo/schemas";
+import type { User, Group, GroupMembership } from "@repo/database";
 
 export interface IAccountService {
   updateUsername(userId: string, updateUserDto: UpdateUserDto): Promise<User>;
@@ -38,4 +42,16 @@ export interface IInvitationsService {
   findAllReceivedForUser(userId: string): Promise<Invitation[]>;
   accept(invitationId: string, userId: string): Promise<void>;
   decline(invitationId: string, userId: string): Promise<void>;
+}
+
+export interface IShoppingListService {
+  getItems(groupId: string): Promise<ShoppingListItem[]>;
+  addItem(
+    groupId: string,
+    dto: CreateShoppingListItemDto,
+    userId: string,
+  ): Promise<ShoppingListItem>;
+  updateItem(dto: UpdateShoppingListItemDto): Promise<ShoppingListItem>;
+  removeItems(dto: RemoveShoppingListItemsDto): Promise<void>;
+  reorderItems(dto: ReorderShoppingListDto): Promise<void>;
 }

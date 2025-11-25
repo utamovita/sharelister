@@ -8,16 +8,17 @@ import {
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { useReorderItems } from "@/features/shopping-list/subfeatures/reorder-item/use-reorder-items.hook";
 import { useShoppingListItems } from "./use-shopping-list-items.hook";
+import { ShoppingListItem } from "@repo/schemas";
 
 export function useShoppingList(groupId: string) {
-  const { mutate: reorderItems } = useReorderItems(groupId);
+  const { reorderItems } = useReorderItems(groupId);
   const {
     data: serverResponse,
     isError,
     isLoading,
   } = useShoppingListItems(groupId);
 
-  const items = serverResponse?.data ?? [];
+  const items: ShoppingListItem[] = serverResponse?.data ?? [];
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -37,15 +38,7 @@ export function useShoppingList(groupId: string) {
 
       const reorderedItems = arrayMove(items, oldIndex, newIndex);
 
-      const payloadToApi = reorderedItems.map((item, index) => ({
-        id: item.id,
-        order: index,
-      }));
-
-      reorderItems({
-        optimisticItems: reorderedItems,
-        payloadToApi: payloadToApi,
-      });
+      reorderItems(reorderedItems);
     }
   }
 

@@ -2,7 +2,7 @@ import { Button } from "@/shared/ui/button";
 import { Trash2 } from "lucide-react";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type { ShoppingListItem } from "@repo/database";
+import type { ShoppingListItem } from "@repo/schemas";
 
 type RemoveItemProps = {
   item: ShoppingListItem;

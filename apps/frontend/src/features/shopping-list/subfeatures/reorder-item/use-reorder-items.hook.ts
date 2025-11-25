@@ -1,53 +1,47 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { shoppingListApi } from "../../api/shopping-list.api";
 import { handleError } from "@/shared/lib/error/handle-error";
-import type { ShoppingListItem } from "@repo/database";
-import type { SuccessResponse } from "@repo/types";
-
-type ReorderVariables = {
-  optimisticItems: ShoppingListItem[];
-  payloadToApi: { id: string; order: number }[];
-};
+import { trpc } from "@repo/trpc/react";
+import { ShoppingListItem } from "@repo/schemas";
 
 export function useReorderItems(groupId: string) {
-  const queryClient = useQueryClient();
-  const queryKey = ["shopping-list", groupId];
+  const utils = trpc.useUtils();
 
-  return useMutation({
-    mutationFn: ({ payloadToApi }: ReorderVariables) =>
-      shoppingListApi.reorderItems({ groupId, items: payloadToApi }),
+  const reorderItems = (reorderedItems: ShoppingListItem[]) => {
+    const payloadToApi = reorderedItems.map((item, index) => ({
+      id: item.id,
+      order: index,
+    }));
 
-    onMutate: async ({ optimisticItems }: ReorderVariables) => {
-      await queryClient.cancelQueries({ queryKey });
+    utils.shoppingList.get.setData({ groupId }, (oldData) => {
+      console.log(oldData);
+      if (!oldData) return oldData;
+      return {
+        ...oldData,
+        data: reorderedItems,
+      };
+    });
 
-      const previousItemsResponse =
-        queryClient.getQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey);
+    mutation.mutate({ groupId, items: payloadToApi });
+  };
 
-      if (previousItemsResponse) {
-        queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(
-          queryKey,
-          {
-            ...previousItemsResponse,
-            data: optimisticItems,
-          },
-        );
-      }
-
-      return { previousItemsResponse };
+  const mutation = trpc.shoppingList.reorder.useMutation({
+    onMutate: async () => {
+      await utils.shoppingList.get.cancel({ groupId });
+      const previousData = utils.shoppingList.get.getData({ groupId });
+      return { previousData };
     },
-
-    onError: (_err, _variables, context) => {
-      if (context?.previousItemsResponse) {
-        queryClient.setQueryData(queryKey, context.previousItemsResponse);
+    onError: (_err, _vars, context) => {
+      if (context?.previousData) {
+        utils.shoppingList.get.setData({ groupId }, context.previousData);
       }
       handleError({
         error: new Error("Failed to reorder items"),
         showToast: true,
       });
     },
-
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey });
+      utils.shoppingList.get.invalidate({ groupId });
     },
   });
+
+  return { reorderItems };
 }

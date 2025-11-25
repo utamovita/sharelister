@@ -1,55 +1,40 @@
 "use client";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleError } from "@/shared/lib/error/handle-error";
-import { shoppingListApi } from "../../api/shopping-list.api";
-import type { SuccessResponse } from "@repo/types";
-import type { UpdateShoppingListItemDto } from "@repo/schemas";
-import type { ShoppingListItem } from "@repo/database";
-
-type UpdateItemVariables = {
-  itemId: string;
-} & Partial<Omit<UpdateShoppingListItemDto, "groupId" | "itemId">>;
+import { trpc } from "@repo/trpc/react";
 
 export function useUpdateItem(groupId: string) {
-  const queryClient = useQueryClient();
-  const queryKey = ["shopping-list", groupId];
+  const utils = trpc.useUtils();
 
-  return useMutation({
-    mutationFn: (variables: UpdateItemVariables) => {
-      const { itemId, ...data } = variables;
-      return shoppingListApi.updateItem({ groupId, itemId, data });
-    },
+  return trpc.shoppingList.update.useMutation({
+    onMutate: async (variables) => {
+      await utils.shoppingList.get.cancel({ groupId });
 
-    onMutate: async (variables: UpdateItemVariables) => {
-      await queryClient.cancelQueries({ queryKey });
+      const previousData = utils.shoppingList.get.getData({ groupId });
 
-      const previousItemsResponse =
-        queryClient.getQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey);
+      utils.shoppingList.get.setData({ groupId }, (oldData) => {
+        if (!oldData) return oldData;
 
-      if (!previousItemsResponse) {
-        return { previousItemsResponse: null };
-      }
+        const { id, ...changes } = variables;
 
-      const newItemsData = previousItemsResponse.data.map((item) =>
-        item.id === variables.itemId ? { ...item, ...variables } : item,
-      );
-
-      queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey, {
-        ...previousItemsResponse,
-        data: newItemsData,
+        return {
+          ...oldData,
+          data: oldData.data.map((item) =>
+            item.id === id ? { ...item, ...changes } : item,
+          ),
+        };
       });
 
-      return { previousItemsResponse };
+      return { previousData };
     },
     onError: (error, _variables, context) => {
-      if (context?.previousItemsResponse) {
-        queryClient.setQueryData(queryKey, context.previousItemsResponse);
+      if (context?.previousData) {
+        utils.shoppingList.get.setData({ groupId }, context.previousData);
       }
       handleError({ error, showToast: true });
     },
     onSettled: () => {
-      void queryClient.invalidateQueries({ queryKey });
+      utils.shoppingList.get.invalidate({ groupId });
     },
   });
 }

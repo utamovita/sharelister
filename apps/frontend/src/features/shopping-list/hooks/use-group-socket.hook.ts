@@ -1,39 +1,33 @@
 import { useEffect } from "react";
 import { socket } from "@/shared/lib/socket";
-import { useQueryClient } from "@tanstack/react-query";
 import { EVENT_NAME } from "@repo/config";
-import type { ShoppingListItem } from "@repo/database";
-import type { SuccessResponse } from "@repo/types";
+import { trpc } from "@repo/trpc/react";
 
 export function useGroupSocket(groupId: string) {
-  const queryClient = useQueryClient();
-  const queryKey = ["shopping-list", groupId];
+  const utils = trpc.useUtils();
 
   useEffect(() => {
     const onUpdate = (payload: { groupId: string }) => {
       if (payload.groupId === groupId) {
-        void queryClient.invalidateQueries({ queryKey });
+        void utils.shoppingList.get.invalidate({ groupId });
       }
     };
 
     const onSoftDeleted = (payload: { itemId: string; groupId: string }) => {
       if (payload.groupId === groupId) {
-        queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(
-          queryKey,
-          (oldData) => {
-            if (!oldData) return oldData;
-            return {
-              ...oldData,
-              data: oldData.data.filter((item) => item.id !== payload.itemId),
-            };
-          },
-        );
+        utils.shoppingList.get.setData({ groupId }, (oldData) => {
+          if (!oldData) return oldData;
+          return {
+            ...oldData,
+            data: oldData.data.filter((item) => item.id !== payload.itemId),
+          };
+        });
       }
     };
 
     const onRestored = (payload: { itemId: string; groupId: string }) => {
       if (payload.groupId === groupId) {
-        void queryClient.invalidateQueries({ queryKey });
+        void utils.shoppingList.get.invalidate({ groupId });
       }
     };
 
@@ -48,5 +42,5 @@ export function useGroupSocket(groupId: string) {
       socket.off(EVENT_NAME.itemSoftDeleted, onSoftDeleted);
       socket.off(EVENT_NAME.itemRestored, onRestored);
     };
-  }, [groupId, queryClient, queryKey]);
+  }, [groupId, utils]);
 }

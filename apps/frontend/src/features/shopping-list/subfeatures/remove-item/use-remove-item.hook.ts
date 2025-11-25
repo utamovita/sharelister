@@ -1,58 +1,44 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { handleError } from "@/shared/lib/error/handle-error";
-import { shoppingListApi } from "../../api/shopping-list.api";
-import type { SuccessResponse } from "@repo/types";
-import type { ShoppingListItem } from "@repo/database";
-import { useRef, useCallback } from "react";
+import { useRef } from "react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { socket } from "@/shared/lib/socket";
 import { EVENT_NAME } from "@repo/config";
+import { trpc } from "@repo/trpc/react";
+import { handleError } from "@/shared/lib/error/handle-error";
+import type { ShoppingListItem } from "@repo/schemas";
 
 const UNDO_DELAY = 3000;
 const REMOVE_TOAST_ID = "remove-items-toast";
 
 export function useRemoveItem(groupId: string) {
-  const queryClient = useQueryClient();
   const { t } = useTranslation("common");
-  const queryKey = ["shopping-list", groupId];
+  const utils = trpc.useUtils();
 
   const removalTimerRef = useRef<NodeJS.Timeout | null>(null);
   const itemsToRemoveRef = useRef<ShoppingListItem[]>([]);
   const itemToUndoRef = useRef<ShoppingListItem | null>(null);
 
-  const restoreItemsToCache = useCallback(
-    (itemsToRestore: ShoppingListItem[]) => {
-      queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(
-        queryKey,
-        (oldData) => {
-          if (!oldData) return oldData;
-          const existingIds = new Set(oldData.data.map((item) => item.id));
-          const newItems = itemsToRestore.filter(
-            (item) => !existingIds.has(item.id),
-          );
-          if (newItems.length === 0) return oldData;
+  const restoreItemsToCache = (itemsToRestore: ShoppingListItem[]) => {
+    utils.shoppingList.get.setData({ groupId }, (oldData) => {
+      if (!oldData) return oldData;
 
-          return {
-            ...oldData,
-            data: [...oldData.data, ...newItems].sort(
-              (a, b) => a.order - b.order,
-            ),
-          };
-        },
+      const existingIds = new Set(oldData.data.map((item) => item.id));
+      const newItems = itemsToRestore.filter(
+        (item) => !existingIds.has(item.id),
       );
-    },
-    [queryClient, queryKey],
-  );
 
-  const deleteMutation = useMutation({
-    mutationFn: (items: ShoppingListItem[]) =>
-      shoppingListApi.removeItems({
-        groupId,
-        itemIds: items.map((item) => item.id),
-      }),
-    onError: (error, itemsFailedToRemove) => {
-      restoreItemsToCache(itemsFailedToRemove);
+      if (newItems.length === 0) return oldData;
+
+      return {
+        ...oldData,
+        data: [...oldData.data, ...newItems].sort((a, b) => a.order - b.order),
+      };
+    });
+  };
+
+  const deleteMutation = trpc.shoppingList.delete.useMutation({
+    onError: (error) => {
+      restoreItemsToCache(itemsToRemoveRef.current);
       handleError({ error, showToast: true });
     },
   });
@@ -67,16 +53,13 @@ export function useRemoveItem(groupId: string) {
     }
     itemToUndoRef.current = itemToRemove;
 
-    queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(
-      queryKey,
-      (oldData) => {
-        if (!oldData) return oldData;
-        return {
-          ...oldData,
-          data: oldData.data.filter((item) => item.id !== itemToRemove.id),
-        };
-      },
-    );
+    utils.shoppingList.get.setData({ groupId }, (oldData) => {
+      if (!oldData) return oldData;
+      return {
+        ...oldData,
+        data: oldData.data.filter((item) => item.id !== itemToRemove.id),
+      };
+    });
 
     socket.emit(EVENT_NAME.itemSoftDelete, {
       itemId: itemToRemove.id,
@@ -85,20 +68,15 @@ export function useRemoveItem(groupId: string) {
 
     removalTimerRef.current = setTimeout(() => {
       if (itemsToRemoveRef.current.length > 0) {
-        deleteMutation.mutate([...itemsToRemoveRef.current]);
+        const ids = itemsToRemoveRef.current.map((i) => i.id);
+        deleteMutation.mutate({ groupId, itemIds: ids });
+
         itemsToRemoveRef.current = [];
         itemToUndoRef.current = null;
         toast.dismiss(REMOVE_TOAST_ID);
       }
     }, UNDO_DELAY);
 
-    const count = itemsToRemoveRef.current.length;
-    console.log(removalTimerRef);
-    console.log(itemsToRemoveRef);
-    console.log(itemToRemove);
-    console.log(itemToUndoRef);
-
-    console.log(count);
     toast.success(
       t("shoppingList.itemRemovedMsg", { itemName: itemToRemove.name }),
       {

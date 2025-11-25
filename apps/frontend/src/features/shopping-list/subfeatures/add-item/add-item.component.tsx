@@ -17,7 +17,7 @@ import { CreateShoppingListItemDto } from "@repo/schemas";
 import { X } from "lucide-react";
 
 function AddItem({ groupId }: { groupId: string }) {
-  const { mutate, isPending } = useAddItem(groupId);
+  const { mutate: addItem, isPending } = useAddItem();
   const {
     register,
     handleSubmit,
@@ -44,11 +44,12 @@ function AddItem({ groupId }: { groupId: string }) {
     if (data.name.trim() === "") return;
 
     const payload = {
-      ...data,
+      groupId,
+      name: data.name,
       quantity: Math.floor(data.quantity ?? 1),
     };
 
-    mutate(payload, {
+    addItem(payload, {
       onSuccess: () => {
         reset();
         setCustomQtyActive(false);

@@ -1,6 +1,6 @@
 import { Checkbox } from "@/shared/ui/checkbox";
 import { cn } from "@/shared/lib/utils";
-import type { ShoppingListItem } from "@repo/database";
+import type { ShoppingListItem } from "@repo/schemas";
 import React, { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -56,7 +56,7 @@ export const ShoppingListItemComponent = ({
   };
 
   const handleToggleCompleted = (checked: boolean) => {
-    updateItem({ itemId: item.id, completed: checked });
+    updateItem({ ...item, completed: checked });
   };
 
   const handleCancelEdit = () => {
@@ -67,9 +67,11 @@ export const ShoppingListItemComponent = ({
   const onSubmit = (data: FormValues) => {
     updateItem(
       {
-        itemId: item.id,
+        id: item.id,
         name: data.name,
         quantity: Number(data.quantity),
+        completed: item.completed,
+        groupId: item.groupId,
       },
       {
         onSuccess: () => setIsEditing(false),
