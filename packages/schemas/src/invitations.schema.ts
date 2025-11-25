@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createInvitationSchema = z.object({
-  email: z.string().email({ message: "validation:email.invalid" }),
+  email: z.email({ message: "validation:email.invalid" }),
 });
 
 export const createInvitationInputSchema = createInvitationSchema.extend({

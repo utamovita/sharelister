@@ -8,13 +8,11 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
 
 import { AuthService } from './auth.service';
 import { GoogleProfile } from './strategy/google.strategy';
 
-@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(

@@ -6,13 +6,13 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { LoginDto, RegisterDto } from '@repo/schemas';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import { I18nContext } from 'nestjs-i18n';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { MailService } from '../mail/mail.service';
-import { LoginUserDto, RegisterUserDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +23,7 @@ export class AuthService {
     private mailService: MailService,
   ) {}
 
-  async register(registerUserDto: RegisterUserDto) {
+  async register(registerUserDto: RegisterDto) {
     const { email, password, username } = registerUserDto;
 
     const existingUser = await this.prisma.user.findUnique({
@@ -86,7 +86,7 @@ export class AuthService {
     return tokens;
   }
 
-  async login(loginUserDto: LoginUserDto) {
+  async login(loginUserDto: LoginDto) {
     const { email, password } = loginUserDto;
 
     const user = await this.prisma.user.findUnique({ where: { email } });

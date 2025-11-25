@@ -8,8 +8,6 @@ import { MailModule } from '../mail/mail.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { GoogleStrategy } from './strategy/google.strategy';
-import { JwtStrategy } from './strategy/jwt.strategy';
-import { JwtRefreshStrategy } from './strategy/jwt-refresh.strategy';
 
 @Module({
   imports: [
@@ -25,13 +23,7 @@ import { JwtRefreshStrategy } from './strategy/jwt-refresh.strategy';
     MailModule,
   ],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    JwtStrategy,
-    JwtRefreshStrategy,
-    PrismaService,
-    GoogleStrategy,
-  ],
+  providers: [AuthService, PrismaService, GoogleStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}
