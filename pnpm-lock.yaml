@@ -264,9 +264,6 @@ importers:
       '@repo/config':
         specifier: workspace:^
         version: link:../../packages/config
-      '@repo/database':
-        specifier: workspace:^
-        version: link:../../packages/database
       '@repo/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
