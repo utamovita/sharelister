@@ -26,11 +26,13 @@ export class InvitationsService implements IInvitationsService {
     });
 
     if (!invitedUser) {
-      throw new NotFoundException('User with this email not found.');
+      throw new NotFoundException('response:error.invitation.userNotFound');
     }
 
     if (invitingUserId === invitedUser.id) {
-      throw new BadRequestException('You cannot invite yourself.');
+      throw new BadRequestException(
+        'response:error.invitation.cannotInviteYourself',
+      );
     }
 
     const existingMembership = await this.prisma.groupMembership.findFirst({
@@ -38,9 +40,7 @@ export class InvitationsService implements IInvitationsService {
     });
 
     if (existingMembership) {
-      throw new ConflictException(
-        'This user is already a member of the group.',
-      );
+      throw new ConflictException('response:error.invitation.alreadyMember');
     }
 
     const existingInvitation = await this.prisma.invitation.findFirst({
@@ -48,9 +48,7 @@ export class InvitationsService implements IInvitationsService {
     });
 
     if (existingInvitation) {
-      throw new ConflictException(
-        'An invitation has already been sent to this user for this group.',
-      );
+      throw new ConflictException('response:error.invitation.alreadySent');
     }
 
     return this.prisma.invitation.create({

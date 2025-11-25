@@ -9,30 +9,5 @@
   },
   "name": {
     "minLength": "Nazwa musi mieć co najmniej {{count}} znaków."
-  },
-  "user": {
-    "alreadyExists": "Użytkownik o tym adresie email już istnieje."
-  },
-  "credentials": {
-    "invalid": "Nieprawidłowe dane logowania."
-  },
-  "group": {
-    "notAMember": "Nie jesteś członkiem tej grupy."
-  },
-  "success": {
-    "login": "Pomyślnie zalogowano.",
-    "register": "Pomyślnie zarejestrowano.",
-    "groupCreated": "Grupa została pomyślnie utworzona.",
-    "profileUpdated": "Twoja nazwa użytkownika została pomyślnie zaktualizowana.",
-    "emailVerified": "Adres e-mail został pomyślnie zweryfikowany.",
-    "passwordResetLinkSent": "Jeśli konto istnieje, link do resetu hasła został wysłany.",
-    "passwordReset": "Hasło zostało pomyślnie zresetowane.",
-    "languageUpdated": "Język został zaktualizowany."
-  },
-  "error": {
-    "generic": "Wystąpił błąd. Proszę spróbować ponownie później.",
-    "invalidVerificationToken": "Nieprawidłowy token weryfikacyjny.",
-    "invalidOrExpiredToken": "Token jest nieprawidłowy lub wygasł.",
-    "emailNotVerified": "Proszę najpierw zweryfikować swój adres e-mail."
   }
 }

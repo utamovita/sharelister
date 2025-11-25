@@ -5,7 +5,7 @@ import {
 import { router } from "../trpc";
 import type { IInvitationsService } from "../services";
 import { groupAdminProcedure, protectedProcedure } from "../procedures";
-import { Invitation, TrpcSuccessResponse } from "@repo/types";
+import { Invitation, SuccessResponse } from "@repo/types";
 
 export const createInvitationsRouter = (
   invitationsService: IInvitationsService,
@@ -16,10 +16,10 @@ export const createInvitationsRouter = (
         ctx.user.id,
       );
 
-      const response: TrpcSuccessResponse<Invitation[]> = {
+      const response: SuccessResponse<Invitation[]> = {
         success: true,
         data: invitations,
-        message: "response:invitations.fetched",
+        message: "",
       };
 
       return response;
@@ -32,7 +32,7 @@ export const createInvitationsRouter = (
 
         await invitationsService.create(groupId, ctx.user.id, dto);
 
-        const response: TrpcSuccessResponse<null> = {
+        const response: SuccessResponse<null> = {
           success: true,
           data: null,
           message: "response:invitation.sent",
@@ -46,7 +46,7 @@ export const createInvitationsRouter = (
       .mutation(async ({ ctx, input }) => {
         await invitationsService.accept(input.invitationId, ctx.user.id);
 
-        const response: TrpcSuccessResponse<null> = {
+        const response: SuccessResponse<null> = {
           success: true,
           data: null,
           message: "response:invitation.accepted",
@@ -60,7 +60,7 @@ export const createInvitationsRouter = (
       .mutation(async ({ ctx, input }) => {
         await invitationsService.decline(input.invitationId, ctx.user.id);
 
-        const response: TrpcSuccessResponse<null> = {
+        const response: SuccessResponse<null> = {
           success: true,
           data: null,
           message: "response:invitation.declined",

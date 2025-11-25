@@ -1,6 +1,9 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, renderHook } from "@testing-library/react";
 import { CreateGroupForm } from "./create-group-form.component";
 import { useCreateGroup } from "./use-create-group.hook";
+import { useForm } from "react-hook-form";
+import { CreateGroupDto, createGroupSchema } from "@repo/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 
@@ -11,12 +14,26 @@ const mockUseCreateGroup = useCreateGroup as jest.Mock;
 describe("CreateGroupForm", () => {
   const mockMutate = jest.fn();
 
+  const setupMockHook = (isPending = false) => {
+    const { result } = renderHook(() =>
+      useForm<CreateGroupDto>({
+        resolver: zodResolver(createGroupSchema),
+        defaultValues: { name: "" },
+      }),
+    );
+
+    mockUseCreateGroup.mockReturnValue({
+      form: result.current,
+      createGroupMutation: {
+        mutate: mockMutate,
+        isPending: isPending,
+      },
+    });
+  };
+
   beforeEach(() => {
     mockMutate.mockClear();
-    mockUseCreateGroup.mockReturnValue({
-      mutate: mockMutate,
-      isPending: false,
-    });
+    setupMockHook(false);
   });
 
   it("should render the form elements correctly", () => {
@@ -42,10 +59,7 @@ describe("CreateGroupForm", () => {
     );
 
     await waitFor(() => {
-      expect(mockMutate).toHaveBeenCalledWith(
-        { name: groupName },
-        expect.anything(),
-      );
+      expect(mockMutate).toHaveBeenCalledWith({ name: groupName });
     });
   });
 
@@ -72,16 +86,13 @@ describe("CreateGroupForm", () => {
       screen.getByRole("button", { name: "common:create" }),
     );
 
-    const errorMessage = await screen.findByText("validation:name.minLength");
+    const errorMessage = await screen.findByText("validation:name.minLength_3");
     expect(errorMessage).toBeInTheDocument();
     expect(mockMutate).not.toHaveBeenCalled();
   });
 
   it("should disable the input and button when isPending is true", () => {
-    mockUseCreateGroup.mockReturnValue({
-      mutate: mockMutate,
-      isPending: true,
-    });
+    setupMockHook(true);
 
     render(<CreateGroupForm />);
 

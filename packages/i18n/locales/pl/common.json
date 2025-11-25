@@ -29,7 +29,6 @@
     "resetPasswordTitle": "Ustaw nowe hasło",
     "resetPasswordDescription": "Wprowadź swoje nowe hasło poniżej.",
     "saveNewPassword": "Zapisz nowe hasło",
-    "passwordResetSuccess": "Twoje hasło zostało zmienione. Możesz się teraz zalogować.",
     "error": {
       "providerMismatchTitle": "Błąd logowania",
       "providerMismatchDescription": "Konto z tym adresem e-mail już istnieje, ale zostało utworzone za pomocą hasła. Zaloguj się, używając swojego hasła.",
@@ -58,21 +57,17 @@
     "membersAmount": "członków",
     "leave": "Opuść grupę",
     "delete": "Usuń grupę",
-    "deleteSuccess": "Grupa została usunięta.",
     "deleteGroupPrompt": "Czy na pewno chcesz usunąć grupę {{groupName}}? Tej akcji nie można cofnąć.",
     "changeNameDialog": {
       "title": "Zmień nazwę grupy",
       "description:": "Wprowadź nową nazwę dla swojej listy zakupów.",
       "newName": "Nowa nazwa",
       "newNamePlaceholder": "Np. Zakupy na weekend",
-      "save": "Zapisz zmiany",
-      "success": "Nazwa grupy została zmieniona."
+      "save": "Zapisz zmiany"
     },
     "manageMembers": {
       "title": "Zarządzaj członkami",
-      "currentMembers": "Obecni członkowie",
-      "removedMemberSuccess": "Członek został usunięty z grupy.",
-      "roleUpdatedSuccess": "Rola członka została zaktualizowana."
+      "currentMembers": "Obecni członkowie"
     }
   },
   "shoppingList": {
@@ -87,9 +82,6 @@
   },
   "invitation": {
     "mainTitle": "Zaproszenia",
-    "sentMsg": "Zaproszenie zostało wysłane.",
-    "joinedMsg": "Pomyślnie dołączyłeś do grupy.",
-    "declinedMsg": "Zaproszenie zostało odrzucone.",
     "dialog": {
       "title": "Zaproś do grupy",
       "description": "Wpisz email osoby, którą chcesz zaprosić do grupy \"{{groupName}}\".",

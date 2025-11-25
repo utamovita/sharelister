@@ -8,13 +8,13 @@ import {
 import { router } from "../trpc";
 import type { IGroupsService } from "../services";
 import { groupAdminProcedure, protectedProcedure } from "../procedures";
-import { GroupWithDetails, TrpcSuccessResponse } from "@repo/types";
+import { GroupWithDetails, SuccessResponse } from "@repo/types";
 
 export const createGroupsRouter = (groupsService: IGroupsService) => {
   return router({
     getAll: protectedProcedure.query(async ({ ctx }) => {
       const groups = await groupsService.getGroups(ctx.user.id);
-      const response: TrpcSuccessResponse<GroupWithDetails[]> = {
+      const response: SuccessResponse<GroupWithDetails[]> = {
         success: true,
         data: groups,
         message: "response:groups.groupsFetched",
@@ -27,7 +27,7 @@ export const createGroupsRouter = (groupsService: IGroupsService) => {
       .mutation(async ({ ctx, input }) => {
         await groupsService.create(input, ctx.user.id);
 
-        const response: TrpcSuccessResponse<null> = {
+        const response: SuccessResponse<null> = {
           success: true,
           data: null,
           message: "response:groups.created",
@@ -40,7 +40,7 @@ export const createGroupsRouter = (groupsService: IGroupsService) => {
       .mutation(async ({ input }) => {
         await groupsService.updateName(input.groupId, input.data);
 
-        const response: TrpcSuccessResponse<null> = {
+        const response: SuccessResponse<null> = {
           success: true,
           data: null,
           message: "response:groups.updatedName",
@@ -53,7 +53,7 @@ export const createGroupsRouter = (groupsService: IGroupsService) => {
       .mutation(async ({ input }) => {
         await groupsService.remove(input.groupId);
 
-        const response: TrpcSuccessResponse<null> = {
+        const response: SuccessResponse<null> = {
           success: true,
           data: null,
           message: "response:groups.deleted",
@@ -66,7 +66,7 @@ export const createGroupsRouter = (groupsService: IGroupsService) => {
       .mutation(async ({ input }) => {
         await groupsService.removeMember(input.groupId, input.memberId);
 
-        const response: TrpcSuccessResponse<null> = {
+        const response: SuccessResponse<null> = {
           success: true,
           data: null,
           message: "response:groups.memberRemoved",
@@ -81,7 +81,7 @@ export const createGroupsRouter = (groupsService: IGroupsService) => {
           role: input.role,
         });
 
-        const response: TrpcSuccessResponse<null> = {
+        const response: SuccessResponse<null> = {
           success: true,
           data: null,
           message: "response:groups.memberRoleUpdated",

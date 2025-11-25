@@ -15,5 +15,29 @@
     "sent": "Invitation sent successfully.",
     "accepted": "Successfully joined the group.",
     "declined": "Invitation declined."
+  },
+  "auth": {
+    "registered": "Registration successful. You can now log in.",
+    "loggedIn": "Logged in successfully.",
+    "loggedOut": "Logged out successfully.",
+    "emailVerified": "Email has been verified successfully. You can now log in.",
+    "passwordReset": "Password reset successfully. You can now log in with your new password.",
+    "passwordResetEmailSent": "If an account with that email exists, a password reset link has been sent."
+  },
+  "error": {
+    "generic": "An error occurred. Please try again later.",
+    "invalidVerificationToken": "Invalid verification token.",
+    "invalidOrExpiredToken": "Token is invalid or has expired.",
+    "emailNotVerified": "Please verify your email address first.",
+    "credentialsInvalid": "Invalid login credentials.",
+    "groupNotAMember": "You are not a member of this group.",
+    "userAlreadyExists": "A user with this email address already exists.",
+    "wrongProvider": "This email is registered with a google sign-in method. Please use that to log in.",
+    "invitation": {
+      "userNotFound": "No user found with this email address.",
+      "alreadyMember": "This user is already a member of the group.",
+      "alreadySent": "An invitation has already been sent to this email address.",
+      "cannotInviteYourself": "You cannot invite yourself to the group."
+    }
   }
 }

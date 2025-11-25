@@ -3,11 +3,9 @@
 import { useCreateGroup } from "./use-create-group.hook";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+
 import { useTranslation } from "react-i18next";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createGroupSchema, type CreateGroupDto } from "@repo/schemas";
+import type { CreateGroupDto } from "@repo/schemas";
 import {
   Form,
   FormControl,
@@ -16,29 +14,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form";
-import { useUiStore } from "@/shared/store/ui.store";
 
 export function CreateGroupForm() {
-  const { mutate, isPending } = useCreateGroup();
-  const { closeDialog } = useUiStore();
-
+  const { createGroupMutation, form } = useCreateGroup();
   const { t } = useTranslation();
 
-  const form = useForm<CreateGroupDto>({
-    resolver: zodResolver(createGroupSchema),
-    defaultValues: {
-      name: "",
-    },
-  });
-
   const onSubmit = (data: CreateGroupDto) => {
-    mutate(data, {
-      onSuccess: () => {
-        form.reset();
-        toast.success(t("validation:success.groupCreated"));
-        closeDialog();
-      },
-    });
+    createGroupMutation.mutate(data);
   };
 
   return (
@@ -58,7 +40,7 @@ export function CreateGroupForm() {
               <FormControl>
                 <Input
                   placeholder={t("common:group.namePlaceholder")}
-                  disabled={isPending}
+                  disabled={createGroupMutation.isPending}
                   {...field}
                 />
               </FormControl>
@@ -66,7 +48,7 @@ export function CreateGroupForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" isLoading={isPending}>
+        <Button type="submit" isLoading={createGroupMutation.isPending}>
           {t("common:create")}
         </Button>
       </form>

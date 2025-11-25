@@ -6,7 +6,7 @@ import {
 } from "@repo/schemas";
 import { router } from "../trpc";
 import type { IAuthService } from "../services";
-import { TrpcSuccessResponse } from "@repo/types";
+import { SuccessResponse } from "@repo/types";
 import { z } from "zod";
 import { AuthResponseType } from "@repo/schemas";
 import { protectedProcedure, publicProcedure } from "../procedures";
@@ -16,7 +16,7 @@ export const createAuthRouter = (authService: IAuthService) => {
     login: publicProcedure.input(loginSchema).mutation(async ({ input }) => {
       const tokens = await authService.login(input);
 
-      const response: TrpcSuccessResponse<AuthResponseType> = {
+      const response: SuccessResponse<AuthResponseType> = {
         success: true,
         data: tokens,
         message: "response:success.login",
@@ -29,10 +29,10 @@ export const createAuthRouter = (authService: IAuthService) => {
       .mutation(async ({ input }) => {
         const result = await authService.register(input);
 
-        const response: TrpcSuccessResponse<{ message: string }> = {
+        const response: SuccessResponse<{ message: string }> = {
           success: true,
           data: result,
-          message: "response:success.register",
+          message: "response:auth.registered",
         };
         return response;
       }),
@@ -40,10 +40,10 @@ export const createAuthRouter = (authService: IAuthService) => {
     logout: protectedProcedure.mutation(async ({ ctx }) => {
       await authService.logout(ctx.user.id);
 
-      const response: TrpcSuccessResponse<null> = {
+      const response: SuccessResponse<null> = {
         success: true,
         data: null,
-        message: "response:auth.logout",
+        message: "response:auth.loggedOut",
       };
       return response;
     }),
@@ -65,10 +65,10 @@ export const createAuthRouter = (authService: IAuthService) => {
           input.refreshToken,
         );
 
-        const response: TrpcSuccessResponse<AuthResponseType> = {
+        const response: SuccessResponse<AuthResponseType> = {
           success: true,
           data: tokens,
-          message: "Token refreshed",
+          message: "",
         };
         return response;
       }),
@@ -78,7 +78,7 @@ export const createAuthRouter = (authService: IAuthService) => {
       .query(async ({ input }) => {
         const tokens = await authService.verifyEmail(input.token);
 
-        const response: TrpcSuccessResponse<AuthResponseType> = {
+        const response: SuccessResponse<AuthResponseType> = {
           success: true,
           data: tokens,
           message: "response:success.emailVerified",
@@ -91,10 +91,10 @@ export const createAuthRouter = (authService: IAuthService) => {
       .mutation(async ({ input }) => {
         await authService.sendPasswordResetLink(input.email);
 
-        const response: TrpcSuccessResponse<null> = {
+        const response: SuccessResponse<null> = {
           success: true,
           data: null,
-          message: "response:success.passwordResetLinkSent",
+          message: "response:success.passwordResetEmailSent",
         };
         return response;
       }),
@@ -104,7 +104,7 @@ export const createAuthRouter = (authService: IAuthService) => {
       .mutation(async ({ input }) => {
         await authService.resetPassword(input.token, input.password);
 
-        const response: TrpcSuccessResponse<null> = {
+        const response: SuccessResponse<null> = {
           success: true,
           data: null,
           message: "response:success.passwordReset",

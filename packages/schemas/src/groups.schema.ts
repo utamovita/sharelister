@@ -5,15 +5,15 @@ export const createGroupSchema = z.object({
   name: z
     .string()
     .min(1, { message: "validation:required" })
-    .min(3, { message: "validation:name.minLength" }),
+    .min(3, {
+      message: JSON.stringify({
+        key: "validation:name.minLength",
+        values: { count: 3 },
+      }),
+    }),
 });
 
-export const updateGroupSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: "validation:required" })
-    .min(3, { message: "validation:name.minLength" }),
-});
+export const updateGroupSchema = createGroupSchema;
 
 export const updateMemberRoleSchema = z.object({
   role: z.enum(ROLES),

@@ -8,7 +8,7 @@ type HandleErrorOptions = {
 };
 
 export function handleError({ error, showToast = true }: HandleErrorOptions) {
-  let messageKey = "validation:error.generic";
+  let messageKey = "response:error.generic";
   let messageValues = {};
 
   if (error instanceof TRPCClientError) {

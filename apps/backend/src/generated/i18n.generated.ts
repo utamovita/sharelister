@@ -35,7 +35,6 @@ export type I18nTranslations = {
             "resetPasswordTitle": string;
             "resetPasswordDescription": string;
             "saveNewPassword": string;
-            "passwordResetSuccess": string;
             "error": {
                 "providerMismatchTitle": string;
                 "providerMismatchDescription": string;
@@ -64,7 +63,6 @@ export type I18nTranslations = {
             "membersAmount": string;
             "leave": string;
             "delete": string;
-            "deleteSuccess": string;
             "deleteGroupPrompt": string;
             "changeNameDialog": {
                 "title": string;
@@ -72,13 +70,10 @@ export type I18nTranslations = {
                 "newName": string;
                 "newNamePlaceholder": string;
                 "save": string;
-                "success": string;
             };
             "manageMembers": {
                 "title": string;
                 "currentMembers": string;
-                "removedMemberSuccess": string;
-                "roleUpdatedSuccess": string;
             };
         };
         "shoppingList": {
@@ -93,9 +88,6 @@ export type I18nTranslations = {
         };
         "invitation": {
             "mainTitle": string;
-            "sentMsg": string;
-            "joinedMsg": string;
-            "declinedMsg": string;
             "dialog": {
                 "title": string;
                 "description": string;
@@ -180,6 +172,30 @@ export type I18nTranslations = {
             "accepted": string;
             "declined": string;
         };
+        "auth": {
+            "registered": string;
+            "loggedIn": string;
+            "loggedOut": string;
+            "emailVerified": string;
+            "passwordReset": string;
+            "passwordResetEmailSent": string;
+        };
+        "error": {
+            "generic": string;
+            "invalidVerificationToken": string;
+            "invalidOrExpiredToken": string;
+            "emailNotVerified": string;
+            "credentialsInvalid": string;
+            "groupNotAMember": string;
+            "userAlreadyExists": string;
+            "wrongProvider": string;
+            "invitation": {
+                "userNotFound": string;
+                "alreadyMember": string;
+                "alreadySent": string;
+                "cannotInviteYourself": string;
+            };
+        };
     };
     "validation": {
         "required": string;
@@ -192,31 +208,6 @@ export type I18nTranslations = {
         };
         "name": {
             "minLength": string;
-        };
-        "user": {
-            "alreadyExists": string;
-        };
-        "credentials": {
-            "invalid": string;
-        };
-        "group": {
-            "notAMember": string;
-        };
-        "success": {
-            "login": string;
-            "register": string;
-            "groupCreated": string;
-            "profileUpdated": string;
-            "emailVerified": string;
-            "passwordResetLinkSent": string;
-            "passwordReset": string;
-            "languageUpdated": string;
-        };
-        "error": {
-            "generic": string;
-            "invalidVerificationToken": string;
-            "invalidOrExpiredToken": string;
-            "emailNotVerified": string;
         };
     };
 };

@@ -92,21 +92,19 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-      throw new UnauthorizedException('credentials.invalid');
+      throw new UnauthorizedException('response:error.credentialsInvalid');
     }
 
     if (user.provider !== 'credentials') {
-      throw new ConflictException(
-        `To konto jest zarejestrowane przez ${user.provider}. Proszę zalogować się za pomocą tej metody.`,
-      );
+      throw new ConflictException(``);
     }
 
     // if (!user.emailVerified) {
-    //   throw new UnauthorizedException('error.emailNotVerified');
+    //   throw new UnauthorizedException('response:emailNotVerified');
     // }
 
     if (!user.passwordHash) {
-      throw new UnauthorizedException('credentials.invalid');
+      throw new UnauthorizedException('response:error.credentialsInvalid');
     }
 
     const isPasswordMatching = await bcrypt.compare(
@@ -115,7 +113,7 @@ export class AuthService {
     );
 
     if (!isPasswordMatching) {
-      throw new UnauthorizedException('credentials.invalid');
+      throw new UnauthorizedException('response:error.credentialsInvalid');
     }
 
     const tokens = await this._generateTokens({
@@ -142,9 +140,7 @@ export class AuthService {
         },
       });
     } else if (user.provider !== 'google') {
-      throw new ConflictException(
-        'Konto z tym adresem e-mail już istnieje. Zaloguj się używając hasła.',
-      );
+      throw new ConflictException('response:error.userAlreadyExists');
     }
 
     const tokens = await this._generateTokens({

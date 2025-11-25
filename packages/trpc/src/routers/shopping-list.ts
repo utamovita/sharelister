@@ -6,7 +6,7 @@ import {
   updateShoppingListItemSchema,
 } from "@repo/schemas";
 import type { ShoppingListItem } from "@repo/schemas";
-import type { TrpcSuccessResponse } from "@repo/types";
+import type { SuccessResponse } from "@repo/types";
 import { router } from "../trpc";
 import type { IShoppingListService } from "../services";
 import { groupProcedure } from "../procedures";
@@ -20,7 +20,7 @@ export const createShoppingListRouter = (service: IShoppingListService) => {
     get: groupProcedure.input(groupParamsSchema).query(async ({ input }) => {
       const items = await service.getItems(input.groupId);
 
-      const response: TrpcSuccessResponse<ShoppingListItem[]> = {
+      const response: SuccessResponse<ShoppingListItem[]> = {
         success: true,
         data: items,
         message: "response:shoppingList.fetched",
@@ -34,7 +34,7 @@ export const createShoppingListRouter = (service: IShoppingListService) => {
         const { groupId, ...dto } = input;
         const item = await service.addItem(groupId, dto, ctx.user.id);
 
-        const response: TrpcSuccessResponse<ShoppingListItem> = {
+        const response: SuccessResponse<ShoppingListItem> = {
           success: true,
           data: item,
           message: "response:shoppingList.itemCreated",
@@ -47,7 +47,7 @@ export const createShoppingListRouter = (service: IShoppingListService) => {
       .mutation(async ({ input }) => {
         const item = await service.updateItem(input);
 
-        const response: TrpcSuccessResponse<ShoppingListItem> = {
+        const response: SuccessResponse<ShoppingListItem> = {
           success: true,
           data: item,
           message: "response:shoppingList.itemUpdated",
@@ -58,7 +58,7 @@ export const createShoppingListRouter = (service: IShoppingListService) => {
     delete: groupProcedure.input(removeInput).mutation(async ({ input }) => {
       await service.removeItems(input);
 
-      const response: TrpcSuccessResponse<null> = {
+      const response: SuccessResponse<null> = {
         success: true,
         data: null,
         message: "response:shoppingList.itemsDeleted",
@@ -69,7 +69,7 @@ export const createShoppingListRouter = (service: IShoppingListService) => {
     reorder: groupProcedure.input(reorderInput).mutation(async ({ input }) => {
       await service.reorderItems(input);
 
-      const response: TrpcSuccessResponse<null> = {
+      const response: SuccessResponse<null> = {
         success: true,
         data: null,
         message: "response:shoppingList.reordered",

@@ -15,5 +15,29 @@
     "sent": "Zaproszenie zostało wysłane.",
     "accepted": "Pomyślnie dołączyłeś do grupy.",
     "declined": "Zaproszenie zostało odrzucone."
+  },
+  "auth": {
+    "registered": "Rejestracja zakończona sukcesem. Teraz możesz się zalogować.",
+    "loggedIn": "Zalogowano pomyślnie.",
+    "loggedOut": "Wylogowano pomyślnie.",
+    "emailVerified": "Adres e-mail został pomyślnie zweryfikowany. Możesz się teraz zalogować.",
+    "passwordReset": "Hasło zostało pomyślnie zresetowane. Teraz możesz się zalogować za pomocą nowego hasła.",
+    "passwordResetEmailSent": "Jeśli istnieje konto z tym adresem e-mail, link do resetowania hasła został wysłany."
+  },
+  "error": {
+    "generic": "Wystąpił błąd. Proszę spróbować ponownie później.",
+    "invalidVerificationToken": "Nieprawidłowy token weryfikacyjny.",
+    "invalidOrExpiredToken": "Token jest nieprawidłowy lub wygasł.",
+    "emailNotVerified": "Proszę najpierw zweryfikować swój adres e-mail.",
+    "credentialsInvalid": "Nieprawidłowe dane logowania.",
+    "groupNotAMember": "Nie jesteś członkiem tej grupy.",
+    "userAlreadyExists": "Użytkownik o tym adresie email już istnieje.",
+    "wrongProvider": "Ten adres e-mail jest zarejestrowany za pomocą metody logowania Google. Proszę użyć tej metody do logowania.",
+    "invitation": {
+      "userNotFound": "Nie znaleziono użytkownika z tym adresem e-mail.",
+      "alreadyMember": "Ten użytkownik jest już członkiem grupy.",
+      "alreadySent": "Zaproszenie zostało już wysłane na ten adres e-mail.",
+      "cannotInviteYourself": "Nie możesz zaprosić samego siebie do grupy."
+    }
   }
 }

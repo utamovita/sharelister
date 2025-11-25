@@ -1,6 +1,6 @@
-import type { User, Invitation as PrismaInvitation } from "@repo/database";
+import type { Invitation as PrismaInvitation } from "@repo/database";
 
-export type TrpcSuccessResponse<T> = {
+export type SuccessResponse<T> = {
   success: true;
   data: T;
   message: string;
@@ -12,11 +12,6 @@ export const ROLES = {
 } as const;
 
 export type Role = (typeof ROLES)[keyof typeof ROLES];
-
-export type UserProfile = Omit<
-  User,
-  "passwordHash" | "provider" | "createdAt" | "updatedAt"
->;
 
 export type GroupMember = {
   role: Role;

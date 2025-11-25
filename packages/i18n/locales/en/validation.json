@@ -9,30 +9,5 @@
   },
   "name": {
     "minLength": "Name must be at least {{count}} characters long."
-  },
-  "user": {
-    "alreadyExists": "A user with this email address already exists."
-  },
-  "credentials": {
-    "invalid": "Invalid login credentials."
-  },
-  "group": {
-    "notAMember": "You are not a member of this group."
-  },
-  "success": {
-    "login": "Logged in successfully.",
-    "register": "Registered successfully.",
-    "groupCreated": "Group created successfully.",
-    "profileUpdated": "Your username has been updated successfully.",
-    "emailVerified": "Email address successfully verified.",
-    "passwordResetLinkSent": "If an account exists, a password reset link has been sent.",
-    "passwordReset": "Password has been successfully reset.",
-    "languageUpdated": "Language has been updated."
-  },
-  "error": {
-    "generic": "An error occurred. Please try again later.",
-    "invalidVerificationToken": "Invalid verification token.",
-    "invalidOrExpiredToken": "Token is invalid or has expired.",
-    "emailNotVerified": "Please verify your email address first."
   }
 }
