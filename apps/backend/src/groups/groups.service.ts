@@ -105,7 +105,7 @@ export class GroupsService implements IGroupsService {
   }
 
   async removeMember(groupId: string, memberId: string): Promise<void> {
-    // TODO: Remove the group if the last member is removed
+    // TODO: Remove the group and items inside if the last member is removed
 
     await this.prisma.groupMembership.delete({
       where: {

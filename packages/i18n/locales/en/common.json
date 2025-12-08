@@ -3,6 +3,7 @@
   "create": "Create",
   "add": "Add",
   "yesDelete": "Yes, delete",
+  "yesLeave": "Yes, leave",
   "accept": "Accept",
   "decline": "Decline",
   "save": "Save",
@@ -53,6 +54,7 @@
     "leave": "Leave group",
     "delete": "Delete group",
     "deleteGroupPrompt": "Are you sure you want to delete the group {{groupName}}? This action cannot be undone.",
+    "leaveGroupPrompt": "Are you sure you want to leave the group {{groupName}}?",
     "changeNameDialog": {
       "title": "Change group name",
       "description:": "Enter a new name for your shopping list.",

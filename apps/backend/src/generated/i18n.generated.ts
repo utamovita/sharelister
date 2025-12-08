@@ -9,6 +9,7 @@ export type I18nTranslations = {
         "create": string;
         "add": string;
         "yesDelete": string;
+        "yesLeave": string;
         "accept": string;
         "decline": string;
         "save": string;
@@ -59,6 +60,7 @@ export type I18nTranslations = {
             "leave": string;
             "delete": string;
             "deleteGroupPrompt": string;
+            "leaveGroupPrompt": string;
             "changeNameDialog": {
                 "title": string;
                 "description:": string;

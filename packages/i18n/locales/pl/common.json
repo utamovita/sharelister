@@ -3,6 +3,7 @@
   "create": "Stwórz",
   "add": "Dodaj",
   "yesDelete": "Tak, usuń",
+  "yesLeave": "Tak, opuść",
   "accept": "Akceptuj",
   "decline": "Odrzuć",
   "save": "Zapisz",
@@ -53,6 +54,7 @@
     "leave": "Opuść grupę",
     "delete": "Usuń grupę",
     "deleteGroupPrompt": "Czy na pewno chcesz usunąć grupę {{groupName}}? Tej akcji nie można cofnąć.",
+    "leaveGroupPrompt": "Czy na pewno chcesz opuścić grupę {{groupName}}?",
     "changeNameDialog": {
       "title": "Zmień nazwę grupy",
       "description": "Wprowadź nową nazwę dla swojej listy zakupów.",

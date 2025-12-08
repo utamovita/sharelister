@@ -42,7 +42,7 @@ export interface IGroupsService {
   create(createGroupDto: CreateGroupDto, userId: string): Promise<Group>;
   updateName(groupId: string, updateGroupDto: UpdateGroupDto): Promise<Group>;
   remove(groupId: string): Promise<void>;
-  removeMember(groupId: string, memberId: string): Promise<void>;
+  removeMember(groupId: string, userId: string): Promise<void>;
   updateMemberRole(
     groupId: string,
     memberId: string,

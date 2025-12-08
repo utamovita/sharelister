@@ -8,8 +8,22 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { GroupWithDetails, ROLES } from "@repo/types";
+import { GroupWithDetails, ROLES, Role } from "@repo/types";
 import { DIALOG_TYPES, useUiStore } from "@/shared/store/ui.store";
+
+function AdminOnly({
+  role,
+  children,
+}: {
+  role: Role;
+  children: React.ReactNode;
+}) {
+  if (role !== ROLES.ADMIN) {
+    return null;
+  }
+
+  return children;
+}
 
 type GroupCardActionsProps = {
   group: GroupWithDetails;
@@ -36,22 +50,33 @@ export function GroupCardActions({ group }: GroupCardActionsProps) {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <AdminOnly role={group.currentUserRole}>
+            <DropdownMenuItem
+              onClick={() => openDialog(DIALOG_TYPES.RENAME_GROUP, { group })}
+            >
+              {t("group.changeName")}
+            </DropdownMenuItem>
+          </AdminOnly>
+          <AdminOnly role={group.currentUserRole}>
+            <DropdownMenuItem
+              onClick={() => openDialog(DIALOG_TYPES.MANAGE_MEMBERS, { group })}
+            >
+              {t("group.manageMembers.title")}
+            </DropdownMenuItem>
+          </AdminOnly>
           <DropdownMenuItem
-            onClick={() => openDialog(DIALOG_TYPES.RENAME_GROUP, { group })}
+            onClick={() => openDialog(DIALOG_TYPES.LEAVE_GROUP, { group })}
           >
-            {t("group.changeName")}
+            {t("group.leave")}
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => openDialog(DIALOG_TYPES.MANAGE_MEMBERS, { group })}
-          >
-            {t("group.manageMembers.title")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => openDialog(DIALOG_TYPES.DELETE_GROUP, { group })}
-            className="text-destructive focus:bg-destructive/10 focus:text-destructive"
-          >
-            {t("group.delete")}
-          </DropdownMenuItem>
+          <AdminOnly role={group.currentUserRole}>
+            <DropdownMenuItem
+              onClick={() => openDialog(DIALOG_TYPES.DELETE_GROUP, { group })}
+              className="text-destructive focus:bg-destructive/10 focus:text-destructive"
+            >
+              {t("group.delete")}
+            </DropdownMenuItem>
+          </AdminOnly>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
