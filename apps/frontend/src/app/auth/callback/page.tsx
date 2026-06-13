@@ -6,11 +6,13 @@ import { useAuthStore } from "@/shared/store/auth.store";
 import { APP_PATHS } from "@repo/config";
 import { SpinnerOverlay } from "@/shared/ui/spinner";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 function AuthCallback() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const setTokens = useAuthStore((state) => state.setTokens);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const accessToken = searchParams.get("accessToken");
@@ -18,13 +20,13 @@ function AuthCallback() {
 
     if (accessToken && refreshToken) {
       setTokens({ accessToken, refreshToken });
-      toast.success("Zalogowano pomyślnie!");
+      toast.success(t("response:auth.loggedIn"));
       router.replace(APP_PATHS.dashboard);
     } else {
-      toast.error("Wystąpił błąd podczas logowania.");
+      toast.error(t("response:error.generic"));
       router.replace(APP_PATHS.login);
     }
-  }, [router, searchParams, setTokens]);
+  }, [router, searchParams, setTokens, t]);
 
   return <SpinnerOverlay variant="page" spinnerSize="lg" />;
 }

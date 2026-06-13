@@ -19,7 +19,7 @@ export const createAuthRouter = (authService: IAuthService) => {
       const response: SuccessResponse<AuthResponseType> = {
         success: true,
         data: tokens,
-        message: "response:success.login",
+        message: "response:auth.loggedIn",
       };
       return response;
     }),
@@ -81,7 +81,7 @@ export const createAuthRouter = (authService: IAuthService) => {
         const response: SuccessResponse<AuthResponseType> = {
           success: true,
           data: tokens,
-          message: "response:success.emailVerified",
+          message: "response:auth.emailVerified",
         };
         return response;
       }),
@@ -94,7 +94,7 @@ export const createAuthRouter = (authService: IAuthService) => {
         const response: SuccessResponse<null> = {
           success: true,
           data: null,
-          message: "response:success.passwordResetEmailSent",
+          message: "response:auth.passwordResetEmailSent",
         };
         return response;
       }),
@@ -107,7 +107,7 @@ export const createAuthRouter = (authService: IAuthService) => {
         const response: SuccessResponse<null> = {
           success: true,
           data: null,
-          message: "response:success.passwordReset",
+          message: "response:auth.passwordReset",
         };
         return response;
       }),

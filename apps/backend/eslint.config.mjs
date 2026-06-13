@@ -9,7 +9,7 @@ import tseslint from 'typescript-eslint';
 
 /** @type { import('typescript-eslint').Config } */
 const baseConfig = {
-  ignores: ['eslint.config.mjs', 'dist/'],
+  ignores: ['eslint.config.mjs', 'dist/', 'src/generated/'],
 };
 
 /** @type { import('typescript-eslint').Config } */

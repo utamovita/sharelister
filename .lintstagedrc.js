@@ -2,6 +2,12 @@ module.exports = {
   "*.{js,jsx,ts,tsx,md}": "pnpm format",
 
   "apps/backend/src/**/*.{ts}": (filenames) => {
+    const filesToProcess = filenames.filter(
+      (f) => !f.includes("src/generated/"),
+    );
+    if (filesToProcess.length === 0) {
+      return [];
+    }
     const fileArgs = filenames.join(" ");
     const lintCommand = `pnpm --filter backend run lint ${fileArgs}`;
     const checkTypesCommand = "pnpm --filter backend run check-ts";

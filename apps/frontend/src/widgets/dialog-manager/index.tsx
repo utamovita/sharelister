@@ -28,16 +28,19 @@ export function DialogManager() {
 
   switch (dialogState.type) {
     case DIALOG_TYPES.MANAGE_MEMBERS:
-      return;
-      <ManageMembersDialog {...commonProps} group={dialogState.props.group} />;
+      return (
+        <ManageMembersDialog {...commonProps} group={dialogState.props.group} />
+      );
 
     case DIALOG_TYPES.RENAME_GROUP:
-      return;
-      <RenameGroupDialog {...commonProps} group={dialogState.props.group} />;
+      return (
+        <RenameGroupDialog {...commonProps} group={dialogState.props.group} />
+      );
 
     case DIALOG_TYPES.DELETE_GROUP:
-      return;
-      <DeleteGroupDialog {...commonProps} group={dialogState.props.group} />;
+      return (
+        <DeleteGroupDialog {...commonProps} group={dialogState.props.group} />
+      );
 
     case DIALOG_TYPES.CREATE_GROUP:
       return <CreateGroupDialog {...commonProps} />;
@@ -46,8 +49,10 @@ export function DialogManager() {
       return (
         <LeaveGroupDialog {...commonProps} group={dialogState.props.group} />
       );
+
     case DIALOG_TYPES.DELETE_ACCOUNT:
       return <DeleteAccountDialog {...commonProps} />;
+
     default:
       return null;
   }
