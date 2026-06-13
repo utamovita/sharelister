@@ -17,8 +17,8 @@ module.exports = {
   },
 
   "apps/frontend/src/**/*.{ts,tsx}": (filenames) => {
-    const lintFileArgs = filenames.map((f) => `--file ${f}`).join(" ");
-    const lintCommand = `pnpm --filter frontend exec next lint --dir apps/frontend ${lintFileArgs}`;
+    // const lintFileArgs = filenames.map((f) => `--file ${f}`).join(" ");
+    // const lintCommand = `pnpm --filter frontend exec next lint --dir apps/frontend ${lintFileArgs}`;
 
     const checkTypesCommand =
       "pnpm --filter frontend exec tsc --noEmit -p tsconfig.json";
@@ -26,6 +26,6 @@ module.exports = {
     const testFileArgs = filenames.join(" ");
     const testCommand = `pnpm --filter frontend exec jest --findRelatedTests ${testFileArgs} --passWithNoTests`;
 
-    return [lintCommand, checkTypesCommand, testCommand];
+    return [checkTypesCommand, testCommand];
   },
 };

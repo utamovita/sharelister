@@ -84,9 +84,11 @@ export const ShoppingListItemComponent = ({
       ref={setNodeRef}
       style={style}
       className={cn(
-        "flex items-center p-2 md:p-4 border-b last-border-b-0 gap-2 md:gap-4 bg-background transition-colors",
+        "flex items-center p-2 md:p-4 border-b last-border-b-0 gap-2 md:gap-4 bg-background transition-colors touch-none",
         isEditing && "bg-muted",
       )}
+      {...attributes}
+      {...listeners}
     >
       {isEditing ? (
         <form
@@ -150,17 +152,6 @@ export const ShoppingListItemComponent = ({
               </span>
             )}
           </label>
-
-          <div
-            {...attributes}
-            {...listeners}
-            className="cursor-grab touch-none p-2"
-            aria-label={t("shoppingList.dragHandleLabel", {
-              itemName: item.name,
-            })}
-          >
-            <GripVertical className="h-5 w-5 text-muted-foreground" />
-          </div>
 
           <EditItem onEdit={() => setIsEditing(true)} itemName={item.name} />
           <RemoveItem item={item} onRemove={onRemove} />
