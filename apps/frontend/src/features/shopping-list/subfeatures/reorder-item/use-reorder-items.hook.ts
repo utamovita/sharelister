@@ -12,7 +12,6 @@ export function useReorderItems(groupId: string) {
     }));
 
     utils.shoppingList.get.setData({ groupId }, (oldData) => {
-      console.log(oldData);
       if (!oldData) return oldData;
       return {
         ...oldData,

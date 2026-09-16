@@ -4,7 +4,7 @@ import type { ShoppingListItem } from "@repo/schemas";
 import React, { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Check, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useUpdateItem } from "@/features/shopping-list/subfeatures/edit-item/use-update-item.hook";
 import { RemoveItem } from "@/features/shopping-list/subfeatures/remove-item/remove-item.component";
@@ -84,8 +84,9 @@ export const ShoppingListItemComponent = ({
       ref={setNodeRef}
       style={style}
       className={cn(
-        "flex items-center p-2 md:p-4 border-b last-border-b-0 gap-2 md:gap-4 bg-background transition-colors touch-none",
+        "flex select-none items-center p-2 md:p-4 border-b last-border-b-0 gap-2 md:gap-4 bg-background transition-colors",
         isEditing && "bg-muted",
+        isDragging && "opacity-50",
       )}
       {...attributes}
       {...listeners}
